@@ -1,0 +1,38 @@
+{
+  "name": "@m-materials/m-materials",
+  "version": "0.1.0",
+  "description": "物料",
+  "author": "",
+  "scripts": {
+    "deploy": "npm run generate && npm run sync",
+    "generate": "iceworks generate",
+    "sync": "iceworks sync",
+    "lint": "npm run eslint && npm run stylelint",
+    "eslint": "eslint --cache --ext .js,.jsx,.ts,.tsx ./",
+    "stylelint": "stylelint \"**/*.{css,scss,less}\"",
+    "prepublishOnly": "npm run generate"
+  },
+  "files": [
+    "build"
+  ],
+  "devDependencies": {
+    "@ice/screenshot": "^0.1.1",
+    "@iceworks/spec": "^1.0.0",
+    "build-plugin-antd": "^0.1.4",
+    "eslint": "^7.0.0",
+    "stylelint": "^13.1.0"
+  },
+  "materialConfig": {
+    "template": "@icedesign/ice-react-material-template",
+    "type": "react",
+    "fusion-site": {
+      "id": 18322,
+      "name": "m-materials",
+      "url": "https://fusion.design/api/v1/sites/18322/materials"
+    }
+  },
+  "dependencies": {
+    "antd": "^4.16.13",
+    "m-demo": "^0.0.5"
+  }
+}
