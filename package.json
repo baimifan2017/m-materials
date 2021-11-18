@@ -30,9 +30,5 @@
       "name": "m-materials",
       "url": "https://fusion.design/api/v1/sites/18322/materials"
     }
-  },
-  "dependencies": {
-    "antd": "^4.16.13",
-    "m-demo": "^0.0.5"
   }
 }
