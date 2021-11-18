@@ -1,6 +1,6 @@
 import { EllipsisOutlined, PlusOutlined } from '@ant-design/icons';
 import ProTable, { TableDropdown } from '@ant-design/pro-table';
-import { Button, Dropdown, Menu, Space, Tag } from 'antd';
+import { Button, Dropdown, Menu } from 'antd';
 import React, { useRef } from 'react';
 import request from 'umi-request';
 import { columns } from './constant';
@@ -37,8 +37,9 @@ export default function IndexView(props) {
    * @param {object} record
    */
   const onExtraFunc = (k, record) => {
-    console.log(record);
+    if (key === 'delete') {
     // todo
+    }
   };
 
   const gridColumn = [

@@ -4,6 +4,8 @@
 
 intro block
 
+> 配置主题
+
 ```json
 
 {
