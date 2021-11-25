@@ -3,18 +3,17 @@
  * @description 大数据渲染场景
  *
  */
- import Grid from "ac-gridcn";
-import 'ac-gridcn/build/Gridcn.css';
+ import { Grid } from 'ac-gridcn';
 import produce from "immer";
 import { get } from 'lodash';
 import React, { Component } from "react";
 import { Loading, Tag } from 'tinper-bee';
-import { processData } from "utils";
-import request from "utils/request";
-import './index.less';
+import { processData } from "../../utils";
+import request from "../../utils/request";
+import './index.css';
  
  
- 
+  
  
  class IGrid extends Component {
      constructor(props) {

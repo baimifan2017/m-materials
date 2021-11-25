@@ -1,4 +1,10 @@
 /* write style here */
+@import "//design.yonyoucloud.com/static/tinper-bee/latest/assets/theme/tinper-bee-indigo.css";
+
 .IGridYonYou {
 
+}
+
+.u-pagination {
+  justify-content: center;
 }

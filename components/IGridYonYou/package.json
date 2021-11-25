@@ -32,7 +32,11 @@
     "component"
   ],
   "dependencies": {
-    "prop-types": "^15.5.8"
+    "ac-gridcn": "^1.0.9",
+    "babel-plugin-import-bee": "^2.1.0",
+    "prop-types": "^15.5.8",
+    "tinper-bee": "^2.4.0",
+    "ucf-request": "^1.0.3"
   },
   "devDependencies": {
     "build-plugin-component": "^1.0.0",
