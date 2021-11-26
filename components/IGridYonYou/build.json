@@ -2,5 +2,9 @@
   "disableGenerateStyle": true,
   "plugins": [
     "build-plugin-component"
-  ]
+  ],
+  "basicComponents":["tinper-bee"],
+  "alias": {
+    "@": "./src"
+  }
 }
