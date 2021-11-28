@@ -38,7 +38,7 @@ export default function IndexView(props) {
    */
   const onExtraFunc = (k, record) => {
     if (key === 'delete') {
-    // todo
+      // todo
     }
   };
 

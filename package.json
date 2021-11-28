@@ -2,7 +2,7 @@
   "name": "@m-materials/m-materials",
   "version": "0.1.0",
   "description": "物料",
-  "author": "",
+  "author": "lzh",
   "scripts": {
     "deploy": "npm run generate && npm run sync",
     "generate": "iceworks generate",

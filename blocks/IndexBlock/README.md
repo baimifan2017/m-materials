@@ -15,7 +15,7 @@ intro block
       "build-plugin-antd",
       {
         "themeConfig": {
-           "primary-color": "#1DA57A"
+           "primary-color": "#f53c32"
         }
       }
     ]
