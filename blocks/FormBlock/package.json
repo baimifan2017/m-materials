@@ -19,10 +19,12 @@
     "prepublishOnly": "npm run build && npm run screenshot"
   },
   "dependencies": {
-    "prop-types": "^15.5.8"
+    "prop-types": "^15.5.8",
+    "tinper-bee": "^2.4.0"
   },
   "devDependencies": {
     "@ice/screenshot": "^0.1.1",
+    "babel-plugin-import-bee": "^2.1.0",
     "build-plugin-block": "^1.0.0",
     "build-scripts": "^1.1.1",
     "react": "^17.0.2",

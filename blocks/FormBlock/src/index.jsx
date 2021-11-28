@@ -1,12 +1,12 @@
 import {
-  AutoComplete, Button, Cascader, Checkbox, Col, Form,
+  AutoComplete, Cascader, Checkbox, Col, Form,
   Input,
   InputNumber, Row, Select,
 } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-
-import { BarCode } from 'm-demo';
+import { Button } from 'tinper-bee';
+// import 'bee-button/build/Button.css';
 
 
 /**
@@ -16,7 +16,6 @@ import { BarCode } from 'm-demo';
 
 const { Option } = Select;
 
-// eslint-disable-next-line @iceworks/best-practices/recommend-functional-component
 export default function FormBlock(props) {
   // eslint-disable-next-line no-undef
   const formRef = React.createRef();
@@ -342,7 +341,7 @@ export default function FormBlock(props) {
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Button>Get captcha</Button>
+            <Button olors="primary" shape="round">Get captcha</Button>
           </Col>
         </Row>
       </Form.Item>

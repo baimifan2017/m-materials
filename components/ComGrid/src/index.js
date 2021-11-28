@@ -222,7 +222,7 @@ export default function ComGrid(props) {
                 />
               </div>
             ) : null}
-            <Table
+            <SimpleGrid
               style={{ wordBreak: 'break-word' }}
               loading={loading}
               ref={(node) => (this.dataTable = node)}
@@ -231,14 +231,7 @@ export default function ComGrid(props) {
               scroll={{ x: getTableWidth(), y: height }}
               size="middle"
               onRow={(record, index) => onRowEventChange(record, index)}
-              pagination={{
-                current: myPagination.current,
-                pageSize: myPagination.pageSize,
-                total: myPagination.total,
-                size: 'small',
-                onChange: this.onPageChange,
-                showTotal: (total) => this.showTotal(total, locale),
-              }}
+              position='center'
             />
           </div>
         )}
