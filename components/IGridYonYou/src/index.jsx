@@ -7,13 +7,11 @@
 import produce from "immer";
 import { get } from 'lodash';
 import React, { Component } from "react";
-import { Loading, Tag } from 'tinper-bee';
+import { Button, Loading, Tag } from 'tinper-bee';
 import { processData } from "../../utils";
 import request from "../../utils/request";
-import './index.css';
- 
- 
-  
+
+
  
  class IGrid extends Component {
      constructor(props) {
@@ -27,7 +25,7 @@ import './index.css';
                  items: 1,
                  total: 1,
                  totalPage: 1,
-                 activePage: 1,
+                 activePage: 1, 
                  pageSize: 15,
                  dataNum: 2
              },
@@ -165,7 +163,7 @@ import './index.css';
              return <Tag colors={stateInfo.colors}>{stateInfo.text}</Tag>
          }
  
-     }
+     } 
      /**
       * 构造参数
       * 1、使用了immer消除参数副作用，防止与调用者相互影响。
@@ -227,6 +225,7 @@ import './index.css';
          }
  
          return (<>
+         <Button>123132</Button>
              <Grid
                  className="demo"
                  rowKey={r => r.id}

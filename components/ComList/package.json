@@ -1,7 +1,7 @@
 {
-  "name": "@m-materials/i-grid-yon-you",
-  "version": "1.0.3",
-  "description": "根据YonYou的tinper-bee中ac-gridcn再封装",
+  "name": "@m-materials/com-list",
+  "version": "1.0.0",
+  "description": "带远程加载功能的下拉列表",
   "files": [
     "demo/",
     "lib/",
@@ -32,42 +32,29 @@
     "component"
   ],
   "dependencies": {
-    "ac-gridcn": "^1.0.9",
-    "babel-plugin-import-bee": "^2.1.0",
-    "prop-types": "^15.5.8",
-    "tinper-bee": "^2.4.0",
-    "ucf-request": "^1.0.3"
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "@iceworks/spec": "^1.0.0",
-    "babel-plugin-import-bee": "^2.1.0",
     "build-plugin-component": "^1.0.0",
     "build-scripts": "^1.1.1",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "eslint": "^7.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "@iceworks/spec": "^1.0.0",
+    "eslint": "^7.0.0",
     "stylelint": "^13.7.2"
   },
   "peerDependencies": {
     "react": "^16 || ^17"
   },
   "componentConfig": {
-    "name": "IGridYonYou",
-    "title": "IGrid",
-    "category": "Table"
+    "name": "ComList",
+    "title": "ComList",
+    "category": "Form"
   },
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT",
-  "homepage": "https://unpkg.com/@m-materials/i-grid-yon-you@1.0.2/build/index.html",
-  "materialConfig": {
-    "fusion-site": {
-      "id": 18322,
-      "name": "m-materials",
-      "url": "https://fusion.design/api/v1/sites/18322/materials"
-    }
-  }
+  "license": "MIT"
 }
