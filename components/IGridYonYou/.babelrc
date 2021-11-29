@@ -1,0 +1,8 @@
+{
+  "plugins": [
+    ["import-bee", {
+      "libraryName": "tinper-bee",
+      "libraryDirectory": "lib"
+    }]
+  ]
+}
