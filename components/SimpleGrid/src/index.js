@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { Table } from 'antd';
+import axios from 'axios';
 import produce from 'immer';
 import { get, isPlainObject, omit } from 'lodash';
-import axios from 'axios';
-import { Table, Button } from 'antd';
+import PropTypes from 'prop-types';
+import React, { useEffect, useState } from 'react';
 import './index.css';
 
 export default function SimpleGrid(props) {
@@ -63,16 +63,21 @@ export default function SimpleGrid(props) {
     }
   };
 
+  /**
+   * 外部ref调用分页查询
+   * @param {object} extParams 
+   */
   const findByPage = (extParams) => {
     const { filters, sorter, ...others } = filters;
     fetch(pagination, { ...filters, ...extParams }, sorter);
   };
+
   /**
    * 执行查询
    *
    * @param params 查询条件
    */
-  fetch = (params = {}) => {
+  const fetch = (params = {}) => {
     const { store } = nextProps;
     if (isPlainObject(store)) {
       const { url, header, method } = store;
@@ -93,9 +98,11 @@ export default function SimpleGrid(props) {
         .then((data) => {
           console.log(data);
           const { res } = constructRes(data);
-
+          // 保存分页条件以外的过滤条件
+          const temFilters = omit(params,['pagination'])
+       
           setPagination({ ...res.pagination });
-          setFilters({ ...filters });
+          setFilters({ ...temFilters });
           setData(res.dataSource);
         })
         .finally(() => {
@@ -111,19 +118,62 @@ export default function SimpleGrid(props) {
    * @param {object} sorter
    */
   const handleTableChange = (pagination, filters, sorter) => {
-    debugger;
-    fetch({
+    const { store, dataSource } = nextProps;
+    const params = {
       sortField: sorter.field,
       sortOrder: sorter.order,
       pagination,
       ...filters,
-    });
+    }
+    if (store.url) {
+      fetch(params);  // 远程
+    } else if (Array.isArray(dataSource)) {
+      localFetch(params) // 本地
+    }
   };
 
+  /**
+   * 本地数据获取
+   * @param {object} params 
+   */
+  const localFetch = (params) => {
+    const { dataSource } = nextProps;
+    const { pageSize, page } = constructReq(params);
+    // 过滤条件中排出分页信息、排序信息
+    const temFilters = omit(params,['pagination','sortField','sortOrder']);
+    const filterKeys = Object.keys(temFilters);
+    let temDataSource = [];
+    
+    // 多条件过滤
+    temDataSource = dataSource.filters(item => {
+      return filterKeys.some(filterKey => item[filterKey] == temFilters[filterKey])
+    })
+    // 分页
+    temDataSource = temDataSource.splice(page * pageSize,pageSize)
+
+    setData(temDataSource)
+  }
+
+
+  /**
+   * 始化入口
+   * 如果store中url参数配置，执行远程数据加载，否则执行本地数据加载。
+   */
+  const init = () => {
+    const { store, dataSource } = nextProps;
+    if (store.url) {
+      fetch({ pagination });
+    } else if (Array.isArray(dataSource) && dataSource.length > 0) {
+      setData(nextProps.dataSource)
+    }
+  }
+
   useEffect(() => {
-    // 执行查询
-    fetch({ pagination });
-  }, [nextProps.url]);
+    init();
+    return () => {
+      setData([])
+    }
+  }, [get(nextProps, 'store.url'), get(nextProps, 'store.params')]);
 
   const constructorTableProps = () => {
     return omit(nextProps, ['resMapping']);
@@ -135,7 +185,6 @@ export default function SimpleGrid(props) {
         columns={nextProps.columns}
         rowKey={(record) => record.id}
         dataSource={data || []}
-        dataSource={[]}
         pagination={pagination}
         loading={loading}
         onChange={handleTableChange}
