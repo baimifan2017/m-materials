@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { Table, Input, Select } from 'antd';
-import { isBoolean, isPlainObject, isEqual } from 'lodash';
 import SimpleGrid from '@m-materials/simple-grid';
+import { Select } from 'antd';
+import { isBoolean, isPlainObject } from 'lodash';
+import React, { useState } from 'react';
 
 export default function ComGrid(props) {
   const { defaultValue, value, dataSource = [], pagination, ...others } = props;
@@ -197,7 +197,6 @@ export default function ComGrid(props) {
     }
   };
 
-  console.log(gridData,'this is gridData')
   return (
     <div className="ComGrid" {...others}>
       <Select
