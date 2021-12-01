@@ -21,6 +21,10 @@ export default function SimpleGrid(props) {
         if (!item.key) {
           item.key = get(item, 'dataIndex');
         }
+
+        if (!draft.position) {
+          draft.position = ['bottomRight']
+        }
       });
     }
   });
@@ -99,8 +103,8 @@ export default function SimpleGrid(props) {
           console.log(data);
           const { res } = constructRes(data);
           // 保存分页条件以外的过滤条件
-          const temFilters = omit(params,['pagination'])
-       
+          const temFilters = omit(params, ['pagination'])
+
           setPagination({ ...res.pagination });
           setFilters({ ...temFilters });
           setData(res.dataSource);
@@ -140,20 +144,20 @@ export default function SimpleGrid(props) {
     const { dataSource } = nextProps;
     const { pageSize, page } = constructReq(params);
     // 过滤条件中排出分页信息、排序信息
-    const temFilters = omit(params,['pagination','sortField','sortOrder']);
+    const temFilters = omit(params, ['pagination', 'sortField', 'sortOrder']);
     const filterKeys = Object.keys(temFilters);
     let temDataSource = [];
-    
+
     // 多条件过滤
     temDataSource = dataSource.filters(item => {
       return filterKeys.some(filterKey => item[filterKey] == temFilters[filterKey])
     })
     // 分页
-    temDataSource = temDataSource.splice(page * pageSize,pageSize)
+    temDataSource = temDataSource.splice(page * pageSize, pageSize)
 
-    setData(temDataSource)
+    setData(temDataSource);
+    setPagination(params.pagination)
   }
-
 
   /**
    * 始化入口
@@ -161,7 +165,7 @@ export default function SimpleGrid(props) {
    */
   const init = () => {
     const { store, dataSource } = nextProps;
-    if (store.url) {
+    if (store && store.url) {
       fetch({ pagination });
     } else if (Array.isArray(dataSource) && dataSource.length > 0) {
       setData(nextProps.dataSource)
@@ -179,6 +183,7 @@ export default function SimpleGrid(props) {
     return omit(nextProps, ['resMapping']);
   };
 
+  pagination.position = nextProps.position;
   return (
     <div className="SimpleGrid">
       <Table
@@ -216,9 +221,10 @@ SimpleGrid.defaultProps = {
       dataIndex: 'name',
     },
   ],
-  resMapping: PropTypes.shape({
-    total: 200,
-    pageSize: 15,
-    current: 1,
-  }),
+  resMapping: {
+    total: 'total',
+    pageSize: 'pageSize',
+    current: 'current',
+    content: 'content'
+  },
 };
