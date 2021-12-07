@@ -1,6 +1,7 @@
 import SimpleGrid from '@m-materials/simple-grid';
 import { Select } from 'antd';
 import { isBoolean, isPlainObject } from 'lodash';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 export default function ComGrid(props) {
@@ -9,40 +10,6 @@ export default function ComGrid(props) {
   const [showGrid, setShowGrid] = useState(false);
   const [mValue, setValue] = useState();
   const [gridData, setGridData] = useState([]);
-
-  const defaultPagination =
-    pagination === false
-      ? false
-      : {
-          current: 1,
-          pageSize: 15,
-          total: dataSource.length || 0,
-          ...(isBoolean(pagination) ? {} : pagination),
-        };
-
-  let defaultData = dataSource;
-  if (!isBoolean(defaultPagination) && isPlainObject(defaultPagination)) {
-    defaultData = this.data.slice(0, defaultPagination.current * defaultPagination.pageSize);
-  }
-
-  const [myPagination, setPagination] = useState(defaultPagination);
-  /**
-   * 获取下拉Table表宽度
-   * @returns w
-   */
-  const getTableWidth = () => {
-    const { columns, width = 0 } = this.props;
-    let w = 0;
-    columns.forEach((col) => {
-      if (col.width && col.width > 0) {
-        w += col.width || 0;
-      }
-    });
-    if ((w === 0 || w < width) && this.select && this.dataTable) {
-      w += width || this.select.clientWidth || 0;
-    }
-    return w;
-  };
 
   /**
    * 获取下拉选中值
@@ -103,7 +70,7 @@ export default function ComGrid(props) {
     this.quickSearchValue = e.target.value;
   };
 
-  initComboGrid = (ref) => {
+  const initComboGrid = (ref) => {
     if (ref) {
       const { width } = props;
       this.comboGrid = ref;
@@ -134,18 +101,6 @@ export default function ComGrid(props) {
     }
     if (!this.loaded) {
       this.loadData(superParams);
-    }
-  };
-
-  const showComboGrid = (showGrid) => {
-    if (showGrid) {
-      const { store } = props;
-      if (store) {
-        getData();
-      }
-      this.setState({ showGrid }, () => {
-        window.setTimeout(this.onResize, 200);
-      });
     }
   };
 
@@ -197,6 +152,25 @@ export default function ComGrid(props) {
     }
   };
 
+  const getTableWidth = () => {
+    const { width,columns } = props;
+    if(width){
+      return width
+    }else if(Array.isArray(columns)){
+      let temWidth = 0;
+      columns.forEach(item => {
+        if(item.width){
+          if(isString(item.width)){
+            temWidth = temWidth + Number(item.width.replace(/px/i,''))
+          }else if(isNumber(item.width)){
+            temWidth = temWidth + item.width
+          }
+          return temWidth;
+        }
+      })
+    }
+  }
+
   return (
     <div className="ComGrid" {...others}>
       <Select
@@ -227,7 +201,7 @@ export default function ComGrid(props) {
               ref={(node) => (this.dataTable = node)}
               columns={columns}
               dataSource={gridData}
-              scroll={{ x: getTableWidth(), y: height }}
+              scroll={{ x: getTableWidth(), y: 200 }}
               size="middle"
               onRow={(record, index) => onRowEventChange(record, index)}
               position='center'
@@ -239,6 +213,10 @@ export default function ComGrid(props) {
   );
 }
 
-ComGrid.propTypes = {};
+ComGrid.propTypes = {
+  with:PropTypes.number, // Table宽度
+
+  
+};
 
 ComGrid.defaultProps = {};
