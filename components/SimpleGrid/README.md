@@ -28,8 +28,6 @@
 | resMapping     | 响应数据映射        |非必填     | Object  | 无    |      |     
 
 
-
-
 ## resMapping 数据响应映射
 
 - 不同的请求接口响应数据的封装形式可能不一致，但是无论何种形式组件最终需要pagination(分页信息) 、content（数据）
@@ -39,6 +37,6 @@
 | -------------- | ---------------  | -------- | ------ | ------ | ---- |
 | content        | 数据字段          |非必填     | object  |       |      |      
 | current        | 当前页            |非必填     | string  | 'current'        |     |     
-| total          | 总页数            |非必填     |  string | 'total'     |      |      
+| total          | 总页数            |非必填     |  string | 'total'      |      |      
 | pageSize       | 每页多少条         |非必填     | string  | 'pageSize'     |       |  
 

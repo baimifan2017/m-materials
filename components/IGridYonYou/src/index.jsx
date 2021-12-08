@@ -3,13 +3,17 @@
  * @description 大数据渲染场景
  *
  */
- import { Grid } from 'ac-gridcn';
+
+  import { Grid } from 'ac-gridcn';
 import produce from "immer";
 import { get } from 'lodash';
 import React, { Component } from "react";
 import { Button, Loading, Tag } from 'tinper-bee';
+// import "tinper-bee/assets/tinper-bee.css";
 import { processData } from "../../utils";
 import request from "../../utils/request";
+
+
 
 
  

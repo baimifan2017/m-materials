@@ -6,5 +6,5 @@
   "basicComponents":["tinper-bee"],
   "alias": {
     "@": "./src"
-  }
+  } 
 }

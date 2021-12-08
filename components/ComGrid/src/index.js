@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
 export default function ComGrid(props) {
-  const { defaultValue, value, dataSource = [], pagination, ...others } = props;
+  const { defaultValue, value, dataSource = [], pagination,placeholder ,allowClear , ...others } = props;
   const defaultV = value || defaultValue || undefined;
   const [showGrid, setShowGrid] = useState(false);
   const [mValue, setValue] = useState();
@@ -57,7 +57,7 @@ export default function ComGrid(props) {
   /**
    * 下拉Table点击事件
    */
-  onRowEventChange = (record, idx) => {
+  const onRowEventChange = (record, idx) => {
     return {
       onClick: () => afterSelect(record, idx),
     };
@@ -66,7 +66,7 @@ export default function ComGrid(props) {
   /**
    * 查询
    */
-  onSearchChange = (e) => {
+  const onSearchChange = (e) => {
     this.quickSearchValue = e.target.value;
   };
 
@@ -102,10 +102,6 @@ export default function ComGrid(props) {
     if (!this.loaded) {
       this.loadData(superParams);
     }
-  };
-
-  const onSearchChange = (e) => {
-    this.quickSearchValue = e.target.value;
   };
 
   const onClearValue = () => {
@@ -176,7 +172,7 @@ export default function ComGrid(props) {
       <Select
         ref={(ele) => (this.select = ele)}
         placeholder={placeholder}
-        onDropdownVisibleChange={this.showComboGrid}
+        // onDropdownVisibleChange={this.showComboGrid}
         // open={showGrid}
         allowClear={allowClear}
         onChange={onClearValue}

@@ -9,6 +9,7 @@ order: 1
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import IGridYonYou from '@m-materials/i-grid-yon-you';
+import 'bee-table/build/Table.css';
 
 class App extends Component {
   render() {
@@ -16,7 +17,7 @@ class App extends Component {
       {
         title: '序号',
         dataIndex: 'index',
-        width: 80,
+        width: 80, 
         render(text, record, index) {
           return index + 1;
         },
