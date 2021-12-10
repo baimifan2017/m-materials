@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import './index.css';
 
+
 export default function SimpleGrid(props) {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -26,6 +27,7 @@ export default function SimpleGrid(props) {
           draft.position = ['bottomRight']
         }
       });
+
     }
   });
 
@@ -72,7 +74,6 @@ export default function SimpleGrid(props) {
    * @param {object} extParams 
    */
   const findByPage = (extParams) => {
-    const { filters, sorter, ...others } = filters;
     fetch(pagination, { ...filters, ...extParams }, sorter);
   };
 
