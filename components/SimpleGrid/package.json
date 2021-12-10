@@ -1,6 +1,6 @@
 {
   "name": "@m-materials/simple-grid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "一个自带分页以及查询的功能的Table组件",
   "files": [
     "demo/",
