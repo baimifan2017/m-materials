@@ -1,4 +1,6 @@
 import SimpleGrid from '@m-materials/simple-grid';
+// 必须手动引入
+import '@m-materials/simple-grid/build/index.css';
 import { Select } from 'antd';
 import cls from 'classnames';
 import { isNumber, isString } from 'lodash';
@@ -9,6 +11,7 @@ export default function ComGrid(props) {
   const { defaultValue, value, dataSource = [],
     columns, pagination, placeholder, allowClear, disabled, showSearch,
     store, searchProperties, ...others } = props;
+
   const defaultV = value || defaultValue || undefined;
   const [showGrid, setShowGrid] = useState(false);
   const [mValue, setValue] = useState();

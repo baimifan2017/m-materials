@@ -57,5 +57,12 @@
     "access": "public"
   },
   "license": "MIT",
-  "homepage": "https://unpkg.com/@m-materials/simple-grid@1.0.0/build/index.html"
+  "homepage": "https://unpkg.com/@m-materials/simple-grid@1.0.1/build/index.html",
+  "materialConfig": {
+    "fusion-site": {
+      "id": 18322,
+      "name": "m-materials",
+      "url": "https://fusion.design/api/v1/sites/18322/materials"
+    }
+  }
 }
