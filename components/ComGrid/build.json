@@ -7,7 +7,7 @@
         "build-plugin-antd",
         {
           "themeConfig": {
-             "primary-color": "#f53c32"
+            //  "primary-color": "#f53c32"
           }
         }
       ]

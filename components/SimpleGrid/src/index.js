@@ -22,15 +22,13 @@ export default function SimpleGrid(props) {
         if (!item.key) {
           item.key = get(item, 'dataIndex');
         }
-
-        if (!draft.position) {
-          draft.position = ['bottomRight']
-        }
       });
+    }
 
+    if (!draft.position) {
+      draft.position = ['bottomRight']
     }
   });
-
   /**
    * 构造请求参数，主要用于更强分页请求参数名称。
    * @param {object} params
@@ -185,6 +183,8 @@ export default function SimpleGrid(props) {
   };
 
   pagination.position = nextProps.position;
+
+  console.log('pagination', pagination)
   return (
     <div className="SimpleGrid">
       <Table

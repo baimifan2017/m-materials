@@ -17,7 +17,8 @@ class LocalSimpleGrid extends React.Component {
       dataSource: [
         { name: '张三', code: '代码1' },
         { name: '李四', code: '代码2' },
-      ]
+      ],
+      position:['bottomCenter']
     }
     return <SimpleGrid {...props}/>;
   }

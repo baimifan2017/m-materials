@@ -6,7 +6,6 @@ import cls from 'classnames';
 import { isNumber, isString } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-import './index.less';
 export default function ComGrid(props) {
   const { defaultValue, value, dataSource = [],
     columns, pagination, placeholder, allowClear, disabled, showSearch,
@@ -150,6 +149,7 @@ export default function ComGrid(props) {
         allowClear={allowClear}
         onChange={onClearValue}
         disabled={disabled}
+        value={mValue}
         {...others}
         dropdownRender={() => (
           <div className={cls('com-grid-drop')} ref={(ref) => initComboGrid(ref)}>
@@ -172,7 +172,7 @@ export default function ComGrid(props) {
               scroll={{ x: getTableWidth(), y: 200 }}
               size="middle"
               onRow={(record, index) => onRowEventChange(record, index)}
-              position='center'
+              position={['bottomCenter']}
             />
           </div>
         )}
@@ -187,4 +187,8 @@ ComGrid.propTypes = {
 
 };
 
-ComGrid.defaultProps = {};
+ComGrid.defaultProps = {
+  reader:{
+    name:'name'
+  }
+};
