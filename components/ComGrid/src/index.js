@@ -1,15 +1,21 @@
 import SimpleGrid from '@m-materials/simple-grid';
 import { Select } from 'antd';
-import { isBoolean, isPlainObject } from 'lodash';
+import cls from 'classnames';
+import { isNumber, isString } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-
+import './index.less';
 export default function ComGrid(props) {
-  const { defaultValue, value, dataSource = [], pagination,placeholder ,allowClear , ...others } = props;
+  const { defaultValue, value, dataSource = [],
+    columns, pagination, placeholder, allowClear, disabled, showSearch,
+    store, searchProperties, ...others } = props;
   const defaultV = value || defaultValue || undefined;
   const [showGrid, setShowGrid] = useState(false);
   const [mValue, setValue] = useState();
-  const [gridData, setGridData] = useState([]);
+
+
+  let quickSearchValue = null; // 快速过滤value
+  let gridRef = null;
 
   /**
    * 获取下拉选中值
@@ -64,43 +70,30 @@ export default function ComGrid(props) {
   };
 
   /**
-   * 查询
+   * 保存快速查询value
    */
   const onSearchChange = (e) => {
-    this.quickSearchValue = e.target.value;
+    quickSearchValue = e.target.value;
+  };
+
+  const onSearch = () => {
+    let temParams = {};
+    searchProperties.forEach(propert => {
+      temParams[propert] = quickSearchValue
+    })
+    if (store.url) {
+      gridRef.findByPage(temParams)
+    } else {
+      gridRef.localFetch(temParams)
+    }
   };
 
   const initComboGrid = (ref) => {
     if (ref) {
       const { width } = props;
-      this.comboGrid = ref;
       if (width && width > 0) {
         ref.parentNode.style.width = `${width}px`;
       }
-    }
-  };
-
-  const getData = () => {
-    const { cascadeParams, store, remotePaging, searchProperties } = props;
-    const { pagination } = this.state;
-    const { params } = store || {};
-    const superParams = { ...(params || {}) };
-    if (remotePaging && !isBoolean(pagination) && isPlainObject(pagination)) {
-      Object.assign(superParams, {
-        quickSearchValue: this.quickSearchValue,
-        quickSearchProperties: searchProperties,
-        pageInfo: {
-          page: pagination.current,
-          rows: pagination.pageSize,
-        },
-      });
-    }
-    if (cascadeParams) {
-      this.loaded = false;
-      Object.assign(superParams, cascadeParams);
-    }
-    if (!this.loaded) {
-      this.loadData(superParams);
     }
   };
 
@@ -121,44 +114,19 @@ export default function ComGrid(props) {
     }
   };
 
-  const onSearch = () => {
-    const { remotePaging } = props;
-    let paginationTmp = pagination;
-    if (!isBoolean(pagination)) {
-      paginationTmp = {
-        ...pagination,
-        current: 1,
-      };
-    }
-    if (remotePaging) {
-      this.loaded = false;
-      setPagination(paginationTmp);
-      this.focus();
-      this.getData();
-    } else {
-      const newData = this.getLocalFilterData();
-      let gridData = [...newData];
-      if (!isBoolean(paginationTmp) && isPlainObject(paginationTmp)) {
-        if ('pageSize' in paginationTmp) {
-          gridData = newData.slice(0, paginationTmp.pageSize);
-        }
-        Object.assign(paginationTmp, { current: 1, total: newData.length });
-      }
-      setGridData(getData);
-    }
-  };
+
 
   const getTableWidth = () => {
-    const { width,columns } = props;
-    if(width){
+    const { width, columns } = props;
+    if (width) {
       return width
-    }else if(Array.isArray(columns)){
+    } else if (Array.isArray(columns)) {
       let temWidth = 0;
       columns.forEach(item => {
-        if(item.width){
-          if(isString(item.width)){
-            temWidth = temWidth + Number(item.width.replace(/px/i,''))
-          }else if(isNumber(item.width)){
+        if (item.width) {
+          if (isString(item.width)) {
+            temWidth = temWidth + Number(item.width.replace(/px/i, ''))
+          } else if (isNumber(item.width)) {
             temWidth = temWidth + item.width
           }
           return temWidth;
@@ -168,18 +136,20 @@ export default function ComGrid(props) {
   }
 
   return (
-    <div className="ComGrid" {...others}>
+    <div className={cls('com-grid')} {...others}>
       <Select
-        ref={(ele) => (this.select = ele)}
+        // ref={(ele) => (this.select = ele)}
         placeholder={placeholder}
         // onDropdownVisibleChange={this.showComboGrid}
         // open={showGrid}
+        style={{ width: '100%' }}
+        className='com-grid-select'
         allowClear={allowClear}
         onChange={onClearValue}
         disabled={disabled}
-        {...selectRestProps}
+        {...others}
         dropdownRender={() => (
-          <div className={cls('seid-combo-grid')} ref={(ref) => initComboGrid(ref)}>
+          <div className={cls('com-grid-drop')} ref={(ref) => initComboGrid(ref)}>
             {showSearch ? (
               <div className="action-bar">
                 <Search
@@ -193,10 +163,9 @@ export default function ComGrid(props) {
             ) : null}
             <SimpleGrid
               style={{ wordBreak: 'break-word' }}
-              loading={loading}
-              ref={(node) => (this.dataTable = node)}
+              ref={(node) => (gridRef = node)}
               columns={columns}
-              dataSource={gridData}
+              dataSource={dataSource}
               scroll={{ x: getTableWidth(), y: 200 }}
               size="middle"
               onRow={(record, index) => onRowEventChange(record, index)}
@@ -210,9 +179,9 @@ export default function ComGrid(props) {
 }
 
 ComGrid.propTypes = {
-  with:PropTypes.number, // Table宽度
+  with: PropTypes.number, // Table宽度
 
-  
+
 };
 
 ComGrid.defaultProps = {};
