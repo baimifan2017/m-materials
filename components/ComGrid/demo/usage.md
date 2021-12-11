@@ -20,7 +20,10 @@ class App extends Component {
       dataSource:[
         {name:"张三",code:"zs"},
         {name:"李四",code:"ls"},
-      ]
+      ],
+      reader:{
+          name:['name','code']
+      }
     }
     return (
       <div style={{width:'200px'}}>

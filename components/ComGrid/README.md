@@ -17,6 +17,8 @@
 | dataSource  |静态数据源                                                                         | false  | object\[] |       |      |
 | store  | 数据接口对象,参考[配置项](#StoreProps                                                     | false  | object |       |      |
 | width  | 下拉数据面板默认宽度                                                                      | false  | number |       |      |
+| field  | 与Reader中的参数对应，可将其参数名称转为对应名称。                              | false | string[] |      | 一般用于form表单中获取多个自定义名称参数|
+| reader | 下拉参数读取设置                                                              | false  | number |      | 一般用于form表单中获取多个自定义名称参数|
 
 ### StoreProps
 
