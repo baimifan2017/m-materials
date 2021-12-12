@@ -11,7 +11,6 @@ export default function ComGrid(props) {
     columns, pagination, placeholder, allowClear, disabled, showSearch,
     store, searchProperties, ...others } = props;
 
-  const defaultV = value || defaultValue || undefined;
   const [showGrid, setShowGrid] = useState(false);
   const [mValue, setValue] = useState();
 
