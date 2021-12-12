@@ -1,7 +1,7 @@
 {
-  "name": "@m-materials/com-tree",
+  "name": "@m-materials/info-tree",
   "version": "1.0.0",
-  "description": "基于antd TreeSelect 下拉树结构选择器",
+  "description": "一种树状结构展示",
   "files": [
     "demo/",
     "lib/",
@@ -33,8 +33,7 @@
   ],
   "dependencies": {
     "antd": "^4.17.3",
-    "prop-types": "^15.5.8",
-    "react-custom-scrollbars": "^4.2.1"
+    "prop-types": "^15.5.8"
   },
   "devDependencies": {
     "build-plugin-component": "^1.0.0",
@@ -51,15 +50,15 @@
     "react": "^16 || ^17"
   },
   "componentConfig": {
-    "name": "ComTree",
-    "title": "ComTree",
-    "category": "Form"
+    "name": "InfoTree",
+    "title": "InfoTree",
+    "category": "Information"
   },
   "publishConfig": {
     "access": "public"
   },
   "license": "MIT",
-  "homepage": "https://unpkg.com/@m-materials/com-tree@1.0.0/build/index.html",
+  "homepage": "https://unpkg.com/@m-materials/info-tree@1.0.0/build/index.html",
   "materialConfig": {
     "fusion-site": {
       "id": 18322,

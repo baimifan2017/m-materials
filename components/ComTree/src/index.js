@@ -117,10 +117,10 @@ export default class ComTree extends React.Component {
   getData = () => {
     const { cascadeParams, store } = this.props;
     const { params } = store || {};
-    const superParams = { ...(params || {}) };
+    let superParams = { ...(params || {}) };
     if (cascadeParams) {
       this.loaded = false;
-      objectAssignAppend(superParams, cascadeParams);
+      superParams = {...superParams,cascadeParams}
     }
     if (!this.loaded) {
       this.loadData(superParams);
