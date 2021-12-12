@@ -6,7 +6,7 @@
         "build-plugin-antd",
         {
           "themeConfig": {
-            //  "primary-color": "#f53c32" // 主题更改配置
+            //  "primary-color": "#f53c32"
           }
         }
       ]
