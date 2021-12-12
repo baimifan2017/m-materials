@@ -1,7 +1,7 @@
 {
-  "name": "@m-materials/com-grid",
+  "name": "@m-materials/form-item",
   "version": "1.0.0",
-  "description": "下拉table组件",
+  "description": "基于antd中form表单，加入了自定义组件，以简化代码为模板。",
   "files": [
     "demo/",
     "lib/",
@@ -32,39 +32,29 @@
     "component"
   ],
   "dependencies": {
-    "@m-materials/simple-grid": "^1.0.1",
-    "antd": "^4.17.3",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {
-    "@iceworks/spec": "^1.0.0",
     "build-plugin-component": "^1.0.0",
     "build-scripts": "^1.1.1",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "eslint": "^7.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "@iceworks/spec": "^1.0.0",
+    "eslint": "^7.0.0",
     "stylelint": "^13.7.2"
   },
   "peerDependencies": {
     "react": "^16 || ^17"
   },
   "componentConfig": {
-    "name": "ComGrid",
-    "title": "ComGrid",
+    "name": "FormItem",
+    "title": "FormItem",
     "category": "Form"
   },
   "publishConfig": {
     "access": "public"
   },
-  "license": "MIT",
-  "homepage": "https://unpkg.com/@m-materials/com-grid@1.0.0/build/index.html",
-  "materialConfig": {
-    "fusion-site": {
-      "id": 18322,
-      "name": "m-materials",
-      "url": "https://fusion.design/api/v1/sites/18322/materials"
-    }
-  }
+  "license": "MIT"
 }
