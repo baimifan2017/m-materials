@@ -133,7 +133,7 @@ export default {
 // 开发环境使用
 const propTypes = {
   maxLength: PropTypes.number,
-  form: PropTypes.object.isRequired,
+  // form: PropTypes.object.isRequired,
   code: PropTypes.any.isRequired,
   categoryCode: PropTypes.string,
   name: PropTypes.any,

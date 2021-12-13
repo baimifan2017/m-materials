@@ -2,20 +2,28 @@ import FormItem from '@m-materials/form-item';
 import React, { Component } from 'react';
 
 
-const { FormRowWrapper,
+const { 
+  FormRowWrapper,
   TimePickerItem, DatePickerItem,
-  MonthPickerItem, RangePickerItem, DatePickerNewItem,
+  MonthPickerItem, RangePickerItem,
   TextItem, InputAreaItem, InputItem, InputNumberItem,
   RadioGroupItem, SelectItem, SwitchItem
 } = FormItem
 
 class Demo extends Component {
+  constructor(props){
+    this.formRef = React.createRef()
+  }
 
+
+  onGetFormProps = () => {
+    console.log(this.formRef.current)
+  }
 
   render() {
 
     return (
-      <FormRowWrapper>
+      <FormRowWrapper ref={this.formRef}>
         <TimePickerItem name='TimePicker' code='TimePicker' />
         <DatePickerItem name='DatePickerItem' code='DatePickerItem' />
         <MonthPickerItem name='MonthPickerItem' code='MonthPickerItem' />
