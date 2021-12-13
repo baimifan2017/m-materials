@@ -2,7 +2,8 @@
 import ComGrid from '@m-materials/com-grid';
 import ComTree from '@m-materials/com-tree';
 import {
-  Button, Checkbox, Col, DatePicker, Form, Input, InputNumber, message, Radio, Select, Switch, TimePicker, Tooltip
+  Button, Checkbox, Col, DatePicker, Form, Input, InputNumber,
+  message, Radio, Select, Switch, TimePicker
 } from 'antd';
 import _ from 'lodash';
 import moment from 'moment';
@@ -115,12 +116,12 @@ class StandardFormItem extends PureComponent {
       // 对接平台组件参数转换
       // 为每一个field赋值
       if (rest.reader.hasOwnProperty('editData') && rest.form) {
-        if (_.isArray(rest.reader.editData)) {
-          rest.reader.initialField = rest.reader.editData;
-          initFieldArrayValue(rest.reader, rest.form);
-        } else {
-          initFieldValue(rest.reader, rest.form);
-        }
+        // if (_.isArray(rest.reader.editData)) {
+        //   rest.reader.initialField = rest.reader.editData;
+        //   initFieldArrayValue(rest.reader, rest.form);
+        // } else {
+        //   initFieldValue(rest.reader, rest.form);
+        // }
       }
       if (rest.allowClear === false) {
         rest.allowClear = false;
@@ -138,6 +139,7 @@ class StandardFormItem extends PureComponent {
         'searchProperties',
       ]);
     }
+
     switch (type) {
       case 'timePicker':
         return <TimePicker style={{ width: '100%' }} {...rest} />;
@@ -151,12 +153,18 @@ class StandardFormItem extends PureComponent {
         rest.onChange && delete rest.onChange;
         return <CustomDatePicker {...rest} />;
       case 'rangePicker':
+        if (!rest.format) {
+          rest.format = 'YYYY-MM-DD';
+        }
         return <RangePicker style={{ width: '100%' }} {...rest} />;
       case 'monthPicker':
+        if (!rest.format) {
+          rest.format = 'YYYY-MM';
+        }
         return <MonthPicker style={{ width: '100%' }} {...rest} />;
       case 'select':
         let options = [...rest.options];
-        let newOptions = options.map(function(value) {
+        let newOptions = options.map(function (value) {
           return (
             <Option key={value.value} value={value.value}>
               {value.text}
@@ -175,14 +183,14 @@ class StandardFormItem extends PureComponent {
         );
       case 'radio':
         options = [...rest.options];
-        newOptions = options.map(function(value) {
+        newOptions = options.map(function (value) {
           return (
             <Radio key={value.value} value={value.value}>
               {value.text}
             </Radio>
           );
         });
-        return <RadioGroup {...rest}>{newOptions}</RadioGroup>;
+        return <RadioGroup {...rest} style={{ width: '100%' }}>{newOptions}</RadioGroup>;
       case 'inputNumber':
         let commonProps = {
           style: { width: '100%' },
@@ -357,14 +365,14 @@ class StandardFormItem extends PureComponent {
     // 判断是否加入form控制
     if (needFormWrapper) {
       formContent = (
-        <span>{form.getFieldDecorator(decoratorCode, this.ItemConfig)(formContent)}</span>
+        <FormItem code={decoratorCode} {...this.ItemConfig}>{formContent}</FormItem>
       );
     } else {
       formContent = <span>{formContent}</span>;
     }
     let content = (
       <Col key={`${code}_col`} span={this.itemSpan} style={{ display: hidden ? 'none' : 'block' }}>
-        <FormItem key={code} label={name} {...this.formLayoutTemp}>
+        <FormItem key={code} code={code} label={name} {...this.formLayoutTemp}>
           {formContent}
           {item.currencyCode && (
             <Input disabled value={item.currencyCode} style={currencyCodeStyleRight} />
@@ -372,20 +380,7 @@ class StandardFormItem extends PureComponent {
         </FormItem>
       </Col>
     );
-    let value = '';
-    if (needFormWrapper) {
-      value = form.getFieldValue(decoratorCode) || '';
-    }
-    if ((item.tooltip || type === 'input' || type === 'text') && !noToolTip) {
-      let title = item.tooltip || '';
-      const text = (item.text && item.text) || '';
-      if ((value.length > 15 && item.disabled) || text.length > 12) {
-        title = title || value || text;
-      }
-      if (title) {
-        content = <Tooltip title={title}>{content}</Tooltip>;
-      }
-    }
+
     return content;
   }
 }

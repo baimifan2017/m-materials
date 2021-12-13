@@ -92,11 +92,11 @@ const ComboListItem = props => {
   return <StandardFormItem {...props} type="comboList" />;
 };
 
-const ComboGridItem = props => {
+const ComGridItem = props => {
   return <StandardFormItem {...props} type="comboGrid" />;
 };
 
-const ComboTreeItem = props => {
+const ComTreeItem = props => {
   return <StandardFormItem {...props} type="comboTree" />;
 };
 
@@ -114,7 +114,20 @@ const CustomizeItem = props => {
 
 
 export default {
+  TextItem,
+  SwitchItem,
+  InputItem,
+  InputNumberItem,
+  InputAreaItem,
+  DatePickerItem,
+  RangePickerItem,
   TimePickerItem,
+  MonthPickerItem,
+  DatePickerNewItem,
+  ComGridItem,
+  ComTreeItem,
+  SelectItem,
+  RadioGroupItem,
   FormRowWrapper
 }
 // 开发环境使用
@@ -150,10 +163,11 @@ const propTypes = {
   afterSelect: PropTypes.func,
   tooltip: PropTypes.string,
 };
-MonthPickerItem.prototype = propTypes;
-DatePickerNewItem.prototype = propTypes;
-ComboGridItem.prototype = propTypes;
-ComboListItem.prototype = propTypes;
+// MonthPickerItem.prototype = propTypes;
+// DatePickerNewItem.prototype = propTypes;
+// ComGridItem.prototype = propTypes;
+// ComTreeItem.prototype = propTypes;
+// ComListItem.prototype = propTypes; todo
 InputItem.propTypes = propTypes;
 CheckboxItem.propTypes = propTypes;
 UploadFileItem.propTypes = propTypes;
@@ -166,4 +180,3 @@ ButtonItem.prototype = propTypes;
 InputGroupItem.prototype = propTypes;
 InputAreaItem.prototype = propTypes;
 SwitchItem.prototype = propTypes;
-ComboTreeItem.prototype = propTypes;

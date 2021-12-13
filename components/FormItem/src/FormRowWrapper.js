@@ -1,5 +1,5 @@
 
-import { Row } from 'antd';
+import { Form, Row } from 'antd';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import React from 'react';
@@ -43,7 +43,9 @@ function handleAddItem(item) {
 }
 export function FormRowWrapper(props) {
   const contentArray = [];
-  const content = props.children;
+  const { children,...others} = props;
+  const content = children;
+
   // 将FormItem分组并重新渲染
   if (_.isArray(content)) {
     for (const item of content) {
@@ -80,50 +82,52 @@ export function FormRowWrapper(props) {
     renderContent[j].push(contentArray[i]);
   }
   return (
-    <span>
-      {renderContent.map((renderItem, index) => {
-        return (
-          <Row key={index}>
-            {renderItem.map(item => {
-              // 为每个元素设置唯一key
-              if (item.props && item.props.code) {
-                item = React.cloneElement(item, {
-                  key: item.props.code,
-                });
-              }
-              // 合法的组件才需要这个步骤
-              // 代理组件的明细的处理
-              // 如果是ignoreDetail为true则忽略明细的代理
-              if (!item.props.ignoreDetail) {
-                if (checkNeedClone({ item, props })) {
+    <Form {...others}>
+      <>
+        {renderContent.map((renderItem, index) => {
+          return (
+            <Row key={index}>
+              {renderItem.map(item => {
+                // 为每个元素设置唯一key
+                if (item.props && item.props.code) {
                   item = React.cloneElement(item, {
-                    disabled: props.isDetail || item.props.disabled,
-                    rules:
-                      props.isDetail || item.props.disabled || item.props.hidden
-                        ? [{ required: false, message: '' }]
-                        : item.props.rules || [{ required: false, message: '' }],
-                    validator:
-                      props.isDetail || item.props.disabled ? null : item.props.validator || null,
+                    key: item.props.code,
                   });
                 }
-              }
-              if (
-                item.props.disabled === !!item.props.required ||
-                item.props.hidden === !!item.props.required
-              ) {
-                return React.cloneElement(item, {
-                  rules:
-                    item.props.disabled || item.props.hidden
-                      ? [{ required: false, message: '' }]
-                      : item.props.rules || [{ required: false, message: '' }],
-                });
-              }
-              return item;
-            })}
-          </Row>
-        );
-      })}
-    </span>
+                // 合法的组件才需要这个步骤
+                // 代理组件的明细的处理
+                // 如果是ignoreDetail为true则忽略明细的代理
+                if (!item.props.ignoreDetail) {
+                  if (checkNeedClone({ item, props })) {
+                    item = React.cloneElement(item, {
+                      disabled: props.isDetail || item.props.disabled,
+                      rules:
+                        props.isDetail || item.props.disabled || item.props.hidden
+                          ? [{ required: false, message: '' }]
+                          : item.props.rules || [{ required: false, message: '' }],
+                      validator:
+                        props.isDetail || item.props.disabled ? null : item.props.validator || null,
+                    });
+                  }
+                }
+                if (
+                  item.props.disabled === !!item.props.required ||
+                  item.props.hidden === !!item.props.required
+                ) {
+                  return React.cloneElement(item, {
+                    rules:
+                      item.props.disabled || item.props.hidden
+                        ? [{ required: false, message: '' }]
+                        : item.props.rules || [{ required: false, message: '' }],
+                  });
+                }
+                return item;
+              })}
+            </Row>
+          );
+        })}
+      </>
+    </Form>
   );
 }
 FormRowWrapper.propTypes = {
