@@ -32,6 +32,8 @@
     "component"
   ],
   "dependencies": {
+    "@m-materials/com-grid": "^1.0.0",
+    "@m-materials/com-tree": "^1.0.0",
     "prop-types": "^15.5.8"
   },
   "devDependencies": {

@@ -1,31 +1,13 @@
 
-
-/**
- * @description 标准化中间组件
- * @author 彭旭
- * @date 2018.12.19
- */
-import React, { PureComponent } from 'react';
+import ComGrid from '@m-materials/com-grid';
+import ComTree from '@m-materials/com-tree';
 import {
-  Form,
-  Radio,
-  Switch,
-  InputNumber,
-  Col,
-  Input,
-  TimePicker,
-  DatePicker,
-  Checkbox,
-  Tooltip,
-  Select,
-  Button,
-  message,
+  Button, Checkbox, Col, DatePicker, Form, Input, InputNumber, message, Radio, Select, Switch, TimePicker, Tooltip
 } from 'antd';
-import moment from 'moment';
 import _ from 'lodash';
-import { ComboGrid, ComboList, ComboTree, MoneyInput } from 'suid';
+import moment from 'moment';
+import React, { PureComponent } from 'react';
 import { CustomDatePicker } from './CustomDatePicker';
-import { getObjData } from '../../utils/methods';
 
 const RadioGroup = Radio.Group;
 const FormItem = Form.Item;
@@ -33,7 +15,7 @@ const { RangePicker, MonthPicker } = DatePicker;
 const { Option } = Select;
 const currencyCodeStyleLeft = { width: '60%' };
 const currencyCodeStyleRight = { width: '37%', marginLeft: '3%' };
-const packageComponents = 'comboGrid comboList comboTree';
+const packageComponents = 'comGrid comList comTree';
 
 // 标准formItem组件和平台组件参数冲突转换
 function changeParams(item, type) {
@@ -46,10 +28,10 @@ function changeParams(item, type) {
   if (item.reader) {
     item.name = item.reader.parseName && item.reader.parseName;
     item.field = item.reader.parseField && item.reader.parseField;
-    if (getObjData(item, 'store.url', '').includes('ByPage')) {
+    if (_.get(item, 'store.url', '').includes('ByPage')) {
       item.remotePaging = true;
     }
-    if (type === 'comboList') {
+    if (type === 'comList') {
       // 根据配置的render自动计算快速搜索值
       if (!item.searchProperties) {
         let searchProperties = [];
@@ -59,7 +41,7 @@ function changeParams(item, type) {
         }
         item.searchProperties = searchProperties;
       }
-    } else if (type === 'comboGrid') {
+    } else if (type === 'comGrid') {
       // 根据配置的columns自动计算快速搜索值
       if (item.columns && !item.searchProperties) {
         item.searchProperties = item.columns
@@ -95,7 +77,7 @@ function initFieldValue(reader, form) {
   const { parseField = [], editData = {} } = reader;
   for (let key of parseField) {
     getFieldDecorator(key, {
-      initialValue: getObjData(editData, key),
+      initialValue: _.get(editData, key),
     });
   }
 }
@@ -221,7 +203,7 @@ class StandardFormItem extends PureComponent {
           }
 
           rest.onBlur && (rest.onBlur = onBlurPlus);
-          return <MoneyInput {...rest} {...commonProps} />;
+          // return <MoneyInput {...rest} {...commonProps} />;
         }
         if (rest.percent) {
           rest.formatter = value => `${value}%`;
@@ -249,13 +231,13 @@ class StandardFormItem extends PureComponent {
         return <span style={rest.style}>{rest.text}</span>;
       case 'switch':
         return <Switch size={rest.size || 'small'} {...rest} />;
-      case 'comboList':
-        return <ComboList {...rest} style={rest.style || { width: '100%' }} />;
-      case 'comboTree':
-        return <ComboTree {...rest} style={rest.style || { width: '100%' }} />;
-      case 'comboGrid':
+      case 'comList':
+        return <ComList {...rest} style={rest.style || { width: '100%' }} />;
+      case 'comTree':
+        return <ComTree {...rest} style={rest.style || { width: '100%' }} />;
+      case 'comGrid':
         return (
-          <ComboGrid
+          <ComGrid
             style={rest.style || { width: '100%' }}
             columns={
               rest.columns || [

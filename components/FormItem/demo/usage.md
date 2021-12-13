@@ -3,24 +3,9 @@ title: Simple Usage
 order: 1
 ---
 
-本 Demo 演示一行文字的用法。
+
+### 这是一个基本演示
 
 ```jsx
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
-import FormItem from '@m-materials/form-item';
-
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <FormItem />
-      </div>
-    );
-  }
-}
-
-ReactDOM.render((
-  <App />
-), mountNode);
+<DemoCode src="./Basic.js" />
 ```
