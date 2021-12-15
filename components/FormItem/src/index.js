@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormRowWrapper } from './FormRowWrapper';
-import StandardFormItem from './StardardFormItem';
+import StandardFormItem from './StandardFormItem';
 
 const TextItem = props => {
   return <StandardFormItem {...props} type="text" />;
