@@ -291,7 +291,7 @@ class StandardFormItem extends PureComponent {
     const {
       noFormControl,
       span,
-      name,
+      label,
       noToolTip,
       code,
       hidden,
@@ -306,9 +306,8 @@ class StandardFormItem extends PureComponent {
     let decoratorCode = code;
     // 如果是平台组件，需要接受form
     if (packageComponents.includes(type)) {
-      item.form = form;
       if (!reader) {
-        message.error(`${name}【${code}】没有配置reader，请检查！`);
+        message.error(`${label}【${code}】没有配置reader，请检查！`);
         return null;
       }
       decoratorCode = reader.parseName || reader.name;
@@ -319,6 +318,11 @@ class StandardFormItem extends PureComponent {
     // 设置item的基础设置
     // 设置规则
     this.ItemRule = rules || this.ItemRule;
+    
+    // 为必填信息设置默认验证信息
+    if (tempItem.required) {
+      this.ItemRule.push({ required: true, message: `${label}的不能为空!` });
+    }
     // 设置初始值
     if (type === 'datePicker') {
       // 时间选择器，如果是时间，如果没有加moment转换，自动加上
@@ -347,7 +351,7 @@ class StandardFormItem extends PureComponent {
     }
     if (type === 'input') {
       if (maxLength) {
-        this.ItemRule.push({ max: maxLength, message: `${name}的长度不能大于${maxLength}!` });
+        this.ItemRule.push({ max: maxLength, message: `${label}的长度不能大于${maxLength}!` });
       }
     }
     this.ItemConfig.rules = this.ItemRule;
@@ -364,20 +368,20 @@ class StandardFormItem extends PureComponent {
     }
     // 判断是否加入form控制
     if (needFormWrapper) {
-      formContent = (
-        <FormItem code={decoratorCode} {...this.ItemConfig}>{formContent}</FormItem>
-      );
+      formContent = (<FormItem name={decoratorCode} label={label}
+        {...this.formLayoutTemp}
+        {...this.ItemConfig}>{formContent}</FormItem>);
     } else {
       formContent = <span>{formContent}</span>;
     }
     let content = (
       <Col key={`${code}_col`} span={this.itemSpan} style={{ display: hidden ? 'none' : 'block' }}>
-        <FormItem key={code} code={code} label={name} {...this.formLayoutTemp}>
+        <>
           {formContent}
           {item.currencyCode && (
             <Input disabled value={item.currencyCode} style={currencyCodeStyleRight} />
           )}
-        </FormItem>
+        </>
       </Col>
     );
 

@@ -93,11 +93,11 @@ const ComboListItem = props => {
 };
 
 const ComGridItem = props => {
-  return <StandardFormItem {...props} type="comboGrid" />;
+  return <StandardFormItem {...props} type="comGrid" />;
 };
 
 const ComTreeItem = props => {
-  return <StandardFormItem {...props} type="comboTree" />;
+  return <StandardFormItem {...props} type="comTree" />;
 };
 
 

@@ -1,52 +1,138 @@
 import FormItem from '@m-materials/form-item';
+import { Button } from 'antd';
 import React, { Component } from 'react';
 
 
-const { 
+const {
   FormRowWrapper,
   TimePickerItem, DatePickerItem,
   MonthPickerItem, RangePickerItem,
   TextItem, InputAreaItem, InputItem, InputNumberItem,
-  RadioGroupItem, SelectItem, SwitchItem
+  RadioGroupItem, SelectItem, SwitchItem,
+  ComGridItem, ComTreeItem
 } = FormItem
 
 class Demo extends Component {
-  constructor(props){
+  constructor(props) {
+    super(props) // 这句必须有
     this.formRef = React.createRef()
   }
 
 
   onGetFormProps = () => {
+    console.log(this.formRef)
     console.log(this.formRef.current)
   }
 
   render() {
+    const combGridProps = {
+      columns: [
+        { title: "姓名", dataIndex: "name", width: 180 },
+        { title: "代码", dataIndex: "code", width: 180 },
+      ],
+      dataSource: [
+        { name: "张三", code: "zs" },
+        { name: "李四", code: "ls" },
+      ],
+      rowKey: 'code',
+      reader: {
+        name: ['name', 'code']
+      }
+    }
+
+    const treeData = [
+      {
+        title: '四川省',
+        id: '0-0',
+        children: [
+          {
+            title: '成都市',
+            id: '0-0-0',
+            children: [
+              { title: '天府新区', id: '0-0-0-0' },
+              { title: '武侯区', id: '0-0-0-1' },
+              { title: '成华区', id: '0-0-0-2' },
+            ],
+          },
+          {
+            title: '绵阳市',
+            id: '0-0-1',
+            children: [
+              { title: '高新区', id: '0-0-1-0' },
+              { title: '经开区', id: '0-0-1-1' },
+              { title: '江油市', id: '0-0-1-2' },
+            ],
+          },
+          {
+            title: '德阳市',
+            id: '0-0-2',
+          },
+        ],
+      }
+    ];
+    const comTreeProps = {
+      style: { width: '100%' },
+      dataSource: treeData,
+      allowClear: true,
+      rowKey: 'id',
+      reader: {
+        name: 'title',
+      }
+    }
 
     return (
-      <FormRowWrapper ref={this.formRef}>
-        <TimePickerItem name='TimePicker' code='TimePicker' />
-        <DatePickerItem name='DatePickerItem' code='DatePickerItem' />
-        <MonthPickerItem name='MonthPickerItem' code='MonthPickerItem' />
-        <RangePickerItem name='RangePickerItem' code='RangePickerItem' />
-        <TextItem name='TextItem' code='TextItem' initialValue='TextItem' />
-        <InputItem name='InputItem' code='InputItem' initialValue='TextItem' />
-        <InputNumberItem name='InputNumberItem' code='InputNumberItem' initialValue='1' />
-        <SwitchItem name='SwitchItem' code='SwitchItem' />
-        <SelectItem name='SwitchItem' code='SwitchItem'
+      <React.Fragment>
+         <FormRowWrapper ref={this.formRef} disabled={true} span={8}>
+        <TimePickerItem
+          label='TimePicker'
+          code='TimePicker'
+          required // 必填， 也可以通过required:[{}]方式传入自定义必填信息。
+        />
+        <DatePickerItem label='DatePickerItem'
+          code='DatePickerItem'
+        />
+        <MonthPickerItem
+          label='MonthPickerItem'
+          code='MonthPickerItem' />
+        <RangePickerItem label='RangePickerItem' code='RangePickerItem' />
+        <InputItem
+          label='InputItem'
+          code='InputItem'
+          initialValue='TextItem'
+          maxLength={10} // 简化写法，也可以通过required:[{}] 自行定义验证信息。
+        />
+        <InputNumberItem label='InputNumberItem' code='InputNumberItem' initialValue='1' />
+        <SwitchItem label='SwitchItem' code='SwitchItem' />
+        <SelectItem label='SelectItem' code='SelectItem'
           options={[
             { value: 'option1', text: 'option1' },
             { value: 'option2', text: 'option2' },
           ]}
         />
-        <RadioGroupItem name='RadioGroupItem' code='RadioGroupItem'
+        <RadioGroupItem label='RadioGroupItem'
+          code='RadioGroupItem'
           options={[
             { value: 'radio1', text: 'radio1' },
             { value: 'radio2', text: 'radio2' },
           ]}
         />
 
-        <InputAreaItem name='InputAreaItem' code='InputAreaItem' initialValue='TextItem' />
+        <ComGridItem label='ComGridItem' code='ComGridItem' {...combGridProps} />
+        <ComTreeItem label='ComTreeItem' code='ComTreeItem' {...comTreeProps} />
+        <InputAreaItem
+          label='InputAreaItem'
+          code='InputAreaItem'
+          initialValue='TextItem'
+          span={16}  // 所占行宽，最大24.
+          formLayout={{
+            labelCol: { span: 4 }, //label 宽度
+            wrapperCol: { span: 20 }, // Element 宽度，labelCol、wrapperCol 两者之和应该等于24.
+          }}
+        />
+
       </FormRowWrapper>
+        <Button onClick={this.onGetFormProps}>提交</Button>
+      </React.Fragment>
     );
   }
 }
