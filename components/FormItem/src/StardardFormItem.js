@@ -30,9 +30,7 @@ function changeParams(item, type) {
   if (item.reader) {
     item.name = item.reader.parseName && item.reader.parseName;
     item.field = item.reader.parseField && item.reader.parseField;
-    if (_.get(item, 'store.url', '').includes('ByPage')) {
-      item.remotePaging = true;
-    }
+
     if (type === 'comList') {
       // 根据配置的render自动计算快速搜索值
       if (!item.searchProperties) {
@@ -117,12 +115,12 @@ class StandardFormItem extends PureComponent {
       // 对接平台组件参数转换
       // 为每一个field赋值
       if (rest.reader.hasOwnProperty('editData') && rest.form) {
-        // if (_.isArray(rest.reader.editData)) {
-        //   rest.reader.initialField = rest.reader.editData;
-        //   initFieldArrayValue(rest.reader, rest.form);
-        // } else {
-        //   initFieldValue(rest.reader, rest.form);
-        // }
+        if (_.isArray(rest.reader.editData)) {
+          rest.reader.initialField = rest.reader.editData;
+          initFieldArrayValue(rest.reader, rest.form);
+        } else {
+          initFieldValue(rest.reader, rest.form);
+        }
       }
       if (rest.allowClear === false) {
         rest.allowClear = false;
@@ -143,12 +141,12 @@ class StandardFormItem extends PureComponent {
 
     switch (type) {
       case 'timePicker':
-        return <TimePicker style={{ width: '100%' }} {...rest} />;
+        return <TimePicker style={{ width: '100%' }} {...rest} locale={locale} />;
       case 'datePicker':
         if (!rest.format) {
           rest.format = 'YYYY-MM-DD';
         }
-        return <DatePicker style={{ width: '100%' }} {...rest} locale={locale}/>;
+        return <DatePicker style={{ width: '100%' }} {...rest} locale={locale} />;
       case 'datePickerNew':
         rest.onChange && (rest.originOnchange = rest.onChange);
         rest.onChange && delete rest.onChange;
@@ -157,12 +155,12 @@ class StandardFormItem extends PureComponent {
         if (!rest.format) {
           rest.format = 'YYYY-MM-DD';
         }
-        return <RangePicker style={{ width: '100%' }} {...rest} locale={locale}/>;
+        return <RangePicker style={{ width: '100%' }} {...rest} locale={locale} />;
       case 'monthPicker':
         if (!rest.format) {
           rest.format = 'YYYY-MM';
         }
-        return <MonthPicker style={{ width: '100%' }} {...rest} locale={locale}/>;
+        return <MonthPicker style={{ width: '100%' }} {...rest} locale={locale} />;
       case 'select':
         let options = [...rest.options];
         let newOptions = options.map(function (value) {
@@ -243,7 +241,9 @@ class StandardFormItem extends PureComponent {
       case 'comList':
         return <ComList {...rest} style={rest.style || { width: '100%' }} />;
       case 'comTree':
-        return <ComTree {...rest} style={rest.style || { width: '100%' }} />;
+        return <ComTree {...rest}
+          defaultValue={rest.initialValue}
+          style={rest.style || { width: '100%' }} />;
       case 'comGrid':
         return (
           <ComGrid
@@ -265,6 +265,7 @@ class StandardFormItem extends PureComponent {
             searchProperties={rest.searchProperties}
             rowKey={rest.rowKey}
             defaultValue={rest.initialValue}
+            form={rest.form}
             {...rest}
           />
         );
@@ -299,7 +300,6 @@ class StandardFormItem extends PureComponent {
       hidden,
       type,
       rules,
-      form,
       validator,
       ...tempItem
     } = this.props;
@@ -320,7 +320,7 @@ class StandardFormItem extends PureComponent {
     // 设置item的基础设置
     // 设置规则
     this.ItemRule = rules || this.ItemRule;
-    
+
     // 为必填信息设置默认验证信息
     if (tempItem.required) {
       this.ItemRule.push({ required: true, message: `${label}的不能为空!` });

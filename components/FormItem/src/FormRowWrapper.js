@@ -42,13 +42,11 @@ function handleAddItem(item) {
   }
 }
 
-let refR = null;
-
-export function FormRowWrapper(props) {
+export const  FormRowWrapper =React.forwardRef((props,ref)=> {
   const contentArray = [];
   const { children,...others} = props;
   const content = children;
- 
+  const [form] = Form.useForm();
 
   // 将FormItem分组并重新渲染
   if (_.isArray(content)) {
@@ -87,11 +85,8 @@ export function FormRowWrapper(props) {
   }
 
 
-  let myRef = React.createRef()
-  console.log('refR',myRef)
-  console.log('refR',myRef.current)
   return (
-    <Form {...others} ref={myRef}>
+    <Form {...others} ref={ref} form={form}>
       <>
         {renderContent.map((renderItem, index) => {
           return (
@@ -100,6 +95,7 @@ export function FormRowWrapper(props) {
                 // 为每个元素设置唯一key
                 if (item.props && item.props.code) {
                   item = React.cloneElement(item, {
+                    form,
                     key: item.props.code,
                   });
                 }
@@ -138,7 +134,8 @@ export function FormRowWrapper(props) {
       </>
     </Form>
   );
-}
+})
+
 FormRowWrapper.propTypes = {
   isDetail: PropTypes.bool,
 };

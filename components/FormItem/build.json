@@ -1,10 +1,10 @@
 {
-  // "disableGenerateStyle": true,
+  "disableGenerateStyle": true,
   "plugins": [
     "build-plugin-component",
     ["build-plugin-antd", {
       "themeConfig": {
-        // "primary-color": "#f40"
+        "primary-color": "#40a9ff"
       }
     }]
   ]

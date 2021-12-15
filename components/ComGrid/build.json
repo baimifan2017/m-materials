@@ -1,13 +1,13 @@
 {
   "basicComponents":["@m-materials"],
-  "disableGenerateStyle": true,
+  "disableGenerateStyle": false,
   "plugins": [
     "build-plugin-component",
     [
         "build-plugin-antd",
         {
           "themeConfig": {
-            //  "primary-color": "#f53c32"
+            //  "primary-color": "#1890FF"
           }
         }
       ]

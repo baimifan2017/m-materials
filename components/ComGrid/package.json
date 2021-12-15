@@ -1,6 +1,6 @@
 {
   "name": "@m-materials/com-grid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "下拉table组件",
   "files": [
     "demo/",

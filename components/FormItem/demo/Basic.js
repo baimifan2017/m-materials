@@ -1,28 +1,37 @@
-import FormItem from '@m-materials/form-item';
-import { Button } from 'antd';
 import React, { Component } from 'react';
+import { Button } from 'antd';
+import FormItem from '@m-materials/form-item';
+
 
 
 const {
   FormRowWrapper,
   TimePickerItem, DatePickerItem,
   MonthPickerItem, RangePickerItem,
-  TextItem, InputAreaItem, InputItem, InputNumberItem,
+  InputAreaItem, InputItem, InputNumberItem,
   RadioGroupItem, SelectItem, SwitchItem,
   ComGridItem, ComTreeItem
 } = FormItem
 
 class Demo extends Component {
+  constructor(props) {
+    super(props)
+  }
   formRef = React.createRef();
 
-  onGetFormProps = () => {
-    console.log(this.formRef)
-    debugger
-    console.log(this.formRef.current)
+  /**
+   * 执行保存
+   * 注意这里是一个异步函数
+   */
+  onSubmit = async () => {
+    try {
+      const values = await this.formRef?.current.validateFields();
+      console.log('Success:', values);
+    } catch (errorInfo) {
+      console.log('Failed:', errorInfo);
+    }
   }
-  
 
-  
   render() {
     const combGridProps = {
       columns: [
@@ -32,12 +41,13 @@ class Demo extends Component {
       dataSource: [
         { name: "张三", code: "zs" },
         { name: "李四", code: "ls" },
-      ], 
+      ],
       rowKey: 'code',
       reader: {
-        name: ['name', 'code']
-      }   
-    } 
+        name: 'name',
+        field:['name','code']
+      }
+    }
 
     const treeData = [
       {
@@ -81,18 +91,21 @@ class Demo extends Component {
 
     return (
       <React.Fragment>
-        <FormRowWrapper ref={this.formRef} disabled={true} span={8}>
+        <FormRowWrapper ref={this.formRef} isDetail={false} span={8} name="control-ref">
           <TimePickerItem
             label='TimePicker'
             code='TimePicker'
-            required // 必填， 也可以通过required:[{}]方式传入自定义必填信息。
           />
-          <DatePickerItem label='DatePickerItem'
+          <DatePickerItem
+            label='DatePickerItem'
             code='DatePickerItem'
+            disabled
           />
           <MonthPickerItem
             label='MonthPickerItem'
-            code='MonthPickerItem' />
+            code='MonthPickerItem'
+            required // 必填， 也可以通过required:[{}]方式传入自定义必填信息。
+          />
           <RangePickerItem label='RangePickerItem' code='RangePickerItem' />
           <InputItem
             label='InputItem'
@@ -134,7 +147,8 @@ class Demo extends Component {
           />
 
         </FormRowWrapper>
-        <Button onClick={this.onGetFormProps} style={{ float: 'right' }}>提交</Button>
+        <Button onClick={this.onSubmit} style={{ float: 'right' }}>提交</Button>
+
       </React.Fragment>
     );
   }

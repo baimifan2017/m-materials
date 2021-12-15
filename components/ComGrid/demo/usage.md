@@ -16,15 +16,16 @@ class App extends Component {
       columns:[
         {title:"姓名", dataIndex:"name",width:150},
         {title:"代码", dataIndex:"code",width:150},
-      ],
+      ], 
       dataSource:[
         {name:"张三",code:"zs"},
         {name:"李四",code:"ls"},
       ],
       reader:{
-          name:['name','code']
+          name:'name',
+          readerField:['name','code']
       },
-      defaultValue:'zs'
+      defaultValue:'张三'
     }
     return (
       <div style={{width:'200px'}}>
