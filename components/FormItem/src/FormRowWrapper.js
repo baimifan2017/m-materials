@@ -41,10 +41,14 @@ function handleAddItem(item) {
     return item;
   }
 }
+
+let refR = null;
+
 export function FormRowWrapper(props) {
   const contentArray = [];
   const { children,...others} = props;
   const content = children;
+ 
 
   // 将FormItem分组并重新渲染
   if (_.isArray(content)) {
@@ -81,8 +85,13 @@ export function FormRowWrapper(props) {
     }
     renderContent[j].push(contentArray[i]);
   }
+
+
+  let myRef = React.createRef()
+  console.log('refR',myRef)
+  console.log('refR',myRef.current)
   return (
-    <Form {...others}>
+    <Form {...others} ref={myRef}>
       <>
         {renderContent.map((renderItem, index) => {
           return (

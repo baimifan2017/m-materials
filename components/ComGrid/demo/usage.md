@@ -23,7 +23,8 @@ class App extends Component {
       ],
       reader:{
           name:['name','code']
-      }
+      },
+      defaultValue:'zs'
     }
     return (
       <div style={{width:'200px'}}>
