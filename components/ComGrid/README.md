@@ -15,6 +15,7 @@
 | showSearch  |显示快速搜索                                                                         | false  | boolean |  false|      |
 | searchProperties|搜索接口数据属性配置                                                 | false  | string\[] | \['code', 'name'] |      |
 | dataSource  |静态数据源                                                                         | false  | object\[] |       |      |
+| defaultValue|默认值                                                                            | false  | string |       |      |
 | store  | 数据接口对象,参考[配置项](#StoreProps                                                     | false  | object |       |      |
 | width  | 下拉数据面板默认宽度                                                                      | false  | number |       |      |
 | field  | 与Reader中的参数对应，可将其参数名称转为对应名称。                              | false | string[] |      | 一般用于form表单中获取多个自定义名称参数|

@@ -5,6 +5,7 @@ import {
   Button, Checkbox, Col, DatePicker, Form, Input, InputNumber,
   message, Radio, Select, Switch, TimePicker
 } from 'antd';
+import locale from 'antd/es/date-picker/locale/zh_CN';
 import _ from 'lodash';
 import moment from 'moment';
 import React, { PureComponent } from 'react';
@@ -147,7 +148,7 @@ class StandardFormItem extends PureComponent {
         if (!rest.format) {
           rest.format = 'YYYY-MM-DD';
         }
-        return <DatePicker style={{ width: '100%' }} {...rest} />;
+        return <DatePicker style={{ width: '100%' }} {...rest} locale={locale}/>;
       case 'datePickerNew':
         rest.onChange && (rest.originOnchange = rest.onChange);
         rest.onChange && delete rest.onChange;
@@ -156,12 +157,12 @@ class StandardFormItem extends PureComponent {
         if (!rest.format) {
           rest.format = 'YYYY-MM-DD';
         }
-        return <RangePicker style={{ width: '100%' }} {...rest} />;
+        return <RangePicker style={{ width: '100%' }} {...rest} locale={locale}/>;
       case 'monthPicker':
         if (!rest.format) {
           rest.format = 'YYYY-MM';
         }
-        return <MonthPicker style={{ width: '100%' }} {...rest} />;
+        return <MonthPicker style={{ width: '100%' }} {...rest} locale={locale}/>;
       case 'select':
         let options = [...rest.options];
         let newOptions = options.map(function (value) {
@@ -263,6 +264,7 @@ class StandardFormItem extends PureComponent {
             }
             searchProperties={rest.searchProperties}
             rowKey={rest.rowKey}
+            defaultValue={rest.initialValue}
             {...rest}
           />
         );

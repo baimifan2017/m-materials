@@ -7,7 +7,7 @@ import { isNumber, isString } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 export default function ComGrid(props) {
-  const { defaultValue, value, dataSource = [],
+  const { value, dataSource = [],
     columns, pagination, placeholder, allowClear, disabled, showSearch,
     store, searchProperties, ...others } = props;
 
@@ -187,7 +187,7 @@ ComGrid.propTypes = {
 };
 
 ComGrid.defaultProps = {
-  reader:{
-    name:'name'
+  reader: {
+    name: 'name'
   }
 };

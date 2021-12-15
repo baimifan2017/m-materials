@@ -13,17 +13,16 @@ const {
 } = FormItem
 
 class Demo extends Component {
-  constructor(props) {
-    super(props) // 这句必须有
-    this.formRef = React.createRef()
-  }
-
+  formRef = React.createRef();
 
   onGetFormProps = () => {
     console.log(this.formRef)
+    debugger
     console.log(this.formRef.current)
   }
+  
 
+  
   render() {
     const combGridProps = {
       columns: [
@@ -33,12 +32,12 @@ class Demo extends Component {
       dataSource: [
         { name: "张三", code: "zs" },
         { name: "李四", code: "ls" },
-      ],
+      ], 
       rowKey: 'code',
       reader: {
         name: ['name', 'code']
-      }
-    }
+      }   
+    } 
 
     const treeData = [
       {
@@ -82,56 +81,60 @@ class Demo extends Component {
 
     return (
       <React.Fragment>
-         <FormRowWrapper ref={this.formRef} disabled={true} span={8}>
-        <TimePickerItem
-          label='TimePicker'
-          code='TimePicker'
-          required // 必填， 也可以通过required:[{}]方式传入自定义必填信息。
-        />
-        <DatePickerItem label='DatePickerItem'
-          code='DatePickerItem'
-        />
-        <MonthPickerItem
-          label='MonthPickerItem'
-          code='MonthPickerItem' />
-        <RangePickerItem label='RangePickerItem' code='RangePickerItem' />
-        <InputItem
-          label='InputItem'
-          code='InputItem'
-          initialValue='TextItem'
-          maxLength={10} // 简化写法，也可以通过required:[{}] 自行定义验证信息。
-        />
-        <InputNumberItem label='InputNumberItem' code='InputNumberItem' initialValue='1' />
-        <SwitchItem label='SwitchItem' code='SwitchItem' />
-        <SelectItem label='SelectItem' code='SelectItem'
-          options={[
-            { value: 'option1', text: 'option1' },
-            { value: 'option2', text: 'option2' },
-          ]}
-        />
-        <RadioGroupItem label='RadioGroupItem'
-          code='RadioGroupItem'
-          options={[
-            { value: 'radio1', text: 'radio1' },
-            { value: 'radio2', text: 'radio2' },
-          ]}
-        />
+        <FormRowWrapper ref={this.formRef} disabled={true} span={8}>
+          <TimePickerItem
+            label='TimePicker'
+            code='TimePicker'
+            required // 必填， 也可以通过required:[{}]方式传入自定义必填信息。
+          />
+          <DatePickerItem label='DatePickerItem'
+            code='DatePickerItem'
+          />
+          <MonthPickerItem
+            label='MonthPickerItem'
+            code='MonthPickerItem' />
+          <RangePickerItem label='RangePickerItem' code='RangePickerItem' />
+          <InputItem
+            label='InputItem'
+            code='InputItem'
+            initialValue='TextItem'
+            maxLength={10} // 简化写法，也可以通过required:[{}] 自行定义验证信息。
+          />
+          <InputNumberItem label='InputNumberItem' code='InputNumberItem' initialValue='1' />
+          <SwitchItem label='SwitchItem' code='SwitchItem' />
+          <SelectItem label='SelectItem' code='SelectItem'
+            options={[
+              { value: 'option1', text: 'option1' },
+              { value: 'option2', text: 'option2' },
+            ]}
+          />
+          <RadioGroupItem label='RadioGroupItem'
+            code='RadioGroupItem'
+            options={[
+              { value: 'radio1', text: 'radio1' },
+              { value: 'radio2', text: 'radio2' },
+            ]}
+          />
 
-        <ComGridItem label='ComGridItem' code='ComGridItem' {...combGridProps} />
-        <ComTreeItem label='ComTreeItem' code='ComTreeItem' {...comTreeProps} />
-        <InputAreaItem
-          label='InputAreaItem'
-          code='InputAreaItem'
-          initialValue='TextItem'
-          span={16}  // 所占行宽，最大24.
-          formLayout={{
-            labelCol: { span: 4 }, //label 宽度
-            wrapperCol: { span: 20 }, // Element 宽度，labelCol、wrapperCol 两者之和应该等于24.
-          }}
-        />
+          <ComGridItem
+            label='ComGridItem'
+            code='ComGridItem'
+            initialValue='zs'
+            {...combGridProps} />
+          <ComTreeItem label='ComTreeItem' code='ComTreeItem' {...comTreeProps} />
+          <InputAreaItem
+            label='InputAreaItem'
+            code='InputAreaItem'
+            initialValue='TextItem'
+            span={16}  // 所占行宽，最大24.
+            formLayout={{
+              labelCol: { span: 4 }, //label 宽度
+              wrapperCol: { span: 20 }, // Element 宽度，labelCol、wrapperCol 两者之和应该等于24.
+            }}
+          />
 
-      </FormRowWrapper>
-        <Button onClick={this.onGetFormProps}>提交</Button>
+        </FormRowWrapper>
+        <Button onClick={this.onGetFormProps} style={{ float: 'right' }}>提交</Button>
       </React.Fragment>
     );
   }
