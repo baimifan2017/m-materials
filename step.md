@@ -42,3 +42,22 @@ MarkDown语法文档 [Markdown语法](https://markdown.com.cn "最好的markdown
        3.执行sync时候需要提供token
 
 
+# lerna
+
+
+
+避免npm对lock文件的修改即可
+
+```json
+
+"command":{
+    "bootstrap":{
+      "npmClientArgs":[
+        "--no-package-lock"
+      ]
+    }
+  }
+
+```
+
+
