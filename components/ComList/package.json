@@ -32,16 +32,18 @@
     "component"
   ],
   "dependencies": {
-    "prop-types": "^15.5.8"
+    "antd": "^4.18.1",
+    "classnames": "^2.3.1",
+    "prop-types": "^15.5.8",
+    "react-custom-scrollbars": "^4.2.1"
   },
   "devDependencies": {
+    "@iceworks/spec": "^1.0.0",
+    "build-plugin-antd": "^0.1.4",
     "build-plugin-component": "^1.0.0",
     "build-scripts": "^1.1.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "@iceworks/spec": "^1.0.0",
     "eslint": "^7.0.0",
     "stylelint": "^13.7.2"
   },
