@@ -106,7 +106,7 @@ export default function ComList(props) {
     const { reader } = this.props;
     let data = [];
     if (reader.data) {
-      data = this.getReader(reader.data, obj) || [];
+      data = getReader(reader.data, obj) || [];
     }
     return data;
   };
@@ -246,28 +246,29 @@ export default function ComList(props) {
 
 
   const afterSelect = (item, index) => {
-    const { afterSelect, reader, form, name, field = [] } = props;
+    const { afterSelect, onChange, reader, form, name } = props;
     setShowList(false);
     setValue(getReader(reader.name, item))
-    const data = { [name]: getReader(reader.name, item) };
-    const formData = form ? form.getFieldsValue() : {};
-    if (
-      reader &&
-      reader.field &&
-      field.length > 0 &&
-      field.length === reader.field.length
-    ) {
-      field.forEach((f, idx) => {
-        data[f] = getReader(
-          reader.field ? reader.field[idx] : '',
-          item,
-        );
-      });
+    const data = name ? { [name]: getReader(reader.name, item) } : { [reader.name]: getReader(reader.name, item) };
+
+    if (Array.isArray(reader.field)) {
+      reader.field.forEach(k => {
+        data[k] = getReader(k, item)
+      })
     }
-    Object.assign(formData, data);
+
     if (form) {
-      form.setFieldsValue(formData);
+      const formData = form.getFieldsValue();
+      Object.assign(formData, data);
+      if (form) {
+        form.setFieldsValue(formData);
+      }
     }
+
+    if (onChange && onChange instanceof Function) {
+      onChange(value)
+    }
+
     if (afterSelect) {
       afterSelect(item, index);
     }

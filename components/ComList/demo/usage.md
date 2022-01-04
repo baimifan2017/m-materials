@@ -20,7 +20,7 @@ class App extends Component {
       reader: { 
         name: 'title',
         description: 'code',
-      },
+      }, 
       defaultValue: '张三',
     };
     return (
