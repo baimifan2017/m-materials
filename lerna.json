@@ -1,0 +1,11 @@
+{
+  "packages": [
+    "components/*/ComGrid",
+    "components/*/ComTree",
+    "components/*/ComList",
+    "components/*/InfoTree",
+    "components/*/FormIte"
+  ],
+  "version": "independent"
+}
+ 

@@ -1,31 +1,45 @@
-import { Input, List, Pagination, Select, Skeleton } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { List, Pagination, Select, Skeleton } from 'antd';
 import axios from 'axios';
 import { isBoolean, isPlainObject } from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ReactDOM from 'react-dom';
-import './index.css';
+import cls from 'classnames';
+import './index.less';
 
-const { Search } = Input;
 
 export default function ComList(props) {
-  const { type, ...others } = props;
+  const {
+    width,
+    listProps,
+    reader,
+    allowClear,
+    disabled,
+    showSearch,
+    searchPlaceHolder,
+    placeholder,
+    style = {},
+    className,
+    ...others
+  } = props;
   const [loading, setLoading] = useState(false);
   const [showList, setShowList] = useState(false);
   const [value, setValue] = useState();
   const [listData, setListData] = useState([]);
-  const [pagination, setPagination] = useState();
+  const [pagination, setPagination] = useState({});
 
-
+  let comboListRef = null;
   let data = [];
   let loaded = false;
+
 
   useEffect(() => {
     const { defaultValue, value, dataSource = [], pagination } = props;
     const defaultV = value || defaultValue || undefined;
-    this.loaded = false;
+    loaded = false;
     data = [...dataSource];
+
     const defaultPagination =
       pagination === false
         ? false
@@ -33,12 +47,11 @@ export default function ComList(props) {
           current: 1,
           pageSize: 15,
           total: dataSource.length || 0,
-          // @ts-ignore
           ...(isBoolean(pagination) ? {} : pagination),
         };
     let defaultData = dataSource;
     if (!isBoolean(defaultPagination) && isPlainObject(defaultPagination)) {
-      defaultData = this.data.slice(
+      defaultData = data.slice(
         0,
         defaultPagination.current * defaultPagination.pageSize,
       );
@@ -67,10 +80,10 @@ export default function ComList(props) {
 
 
   const hideComboList = (e) => {
-    const tDom = ReactDOM.findDOMNode(this.comboList);
+    const tDom = ReactDOM.findDOMNode(comboListRef);
     if (showList) {
       if (tDom && tDom.contains(e.target)) {
-        this.focus();
+        focus();
       } else {
         setTimeout(() => {
           setShowList(false);
@@ -113,13 +126,11 @@ export default function ComList(props) {
         data = d;
       }
     }
-    console.log(data, 'this is data')
     return data;
   };
 
   const getData = () => {
     const { cascadeParams, store, remotePaging, searchProperties } = props;
-    const { pagination } = this.state;
     const superParams = { ...(params || {}) };
     if (remotePaging && !isBoolean(pagination) && isPlainObject(pagination)) {
       Object.assign(superParams, {
@@ -132,12 +143,9 @@ export default function ComList(props) {
       });
     }
     if (cascadeParams) {
-      this.loaded = false;
       Object.assign(superParams, cascadeParams);
     }
-    if (!this.loaded) {
-      loadData(superParams);
-    }
+    loadData(superParams);
   };
 
   const loadData = (params) => {
@@ -147,7 +155,6 @@ export default function ComList(props) {
     const requestOptions = {
       method: type,
       url,
-      // @ts-ignore
       headers: { neverCancel: true },
     };
     if (type.toLocaleLowerCase() === 'get') {
@@ -276,7 +283,7 @@ export default function ComList(props) {
         filterName = reader.name;
       }
       newData = newData.filter(item => {
-        const fieldValue = this.getReader(filterName, item);
+        const fieldValue = getReader(filterName, item);
         if (fieldValue) {
           return (
             fieldValue.toLowerCase().indexOf(searchValue.toLowerCase()) !== -1
@@ -331,7 +338,7 @@ export default function ComList(props) {
     }
     if (remotePaging) {
       this.loaded = false;
-      
+
       setPagination(paginationTmp)
       focus();
       getData();
@@ -342,20 +349,17 @@ export default function ComList(props) {
         listData = newData.slice(0, paginationTmp.pageSize);
         Object.assign(paginationTmp, { current: 1, total: newData.length });
       }
-      this.setState(
-        {
-          listData,
-          pagination: paginationTmp,
-        },
-        this.focus,
-      );
+
+
+      setListData(listData);
+      setPagination(paginationTmp)
+      this.focus()
     }
   };
 
   const initComboList = (ref) => {
     if (ref) {
-      const { width } = this.props;
-      this.comboList = ref;
+      comboListRef = ref;
       if (width && width > 0) {
         ref.parentNode.style.width = `${width}px`;
       }
@@ -363,7 +367,7 @@ export default function ComList(props) {
   };
 
   const getRowKey = (item, index) => {
-    const { rowKey } = this.props;
+    const { rowKey } = props;
     let key;
     if (typeof rowKey === 'function') {
       key = rowKey(item);
@@ -378,30 +382,18 @@ export default function ComList(props) {
     return key;
   };
 
-  const {
-    listProps,
-    reader,
-    allowClear,
-    disabled,
-    showSearch,
-    searchPlaceHolder,
-    placeholder,
-    style = {},
-    className,
-  } = props;
-  const selectRestProps = { style, className };
-  Object.assign(selectRestProps, { value });
-
   return (
-    <div className="ComList" {...others}>
+    <div className={cls('com-list')} {...others}>
       <Select
         // ref={ele => (this.select = ele)}
-        onDropdownVisibleChange={showComboList}
+        // onDropdownVisibleChange={showComboList}
         allowClear={allowClear}
+        style={{ width: '100%' }}
         placeholder={placeholder}
         onChange={onClearValue}
+        value={value}
         disabled={disabled}
-        {...selectRestProps}
+        {...others}
         dropdownRender={() => (
           <div ref={ref => initComboList(ref)}>
             {showSearch ? (
@@ -415,7 +407,7 @@ export default function ComList(props) {
                 />
               </div>
             ) : null}
-            <div className="list-body">
+            <div className='list-body'>
               <Scrollbars style={{ height: '220px' }}>
                 <List
                   itemLayout={
@@ -439,10 +431,10 @@ export default function ComList(props) {
                           listProps.renderItem(item, index)
                         ) : (
                           <List.Item.Meta
-                            title={this.getReader(reader.name, item)}
+                            title={getReader(reader.name, item)}
                             description={
                               reader.description
-                                ? this.getReader(reader.description, item)
+                                ? getReader(reader.description, item)
                                 : ''
                             }
                           />
@@ -453,7 +445,7 @@ export default function ComList(props) {
                 />
               </Scrollbars>
             </div>
-            {pagination === false ? null : (
+            {props.pagination === false ? null : (
               <div className="list-page-bar">
                 <Pagination
                   simple
@@ -469,11 +461,11 @@ export default function ComList(props) {
   );
 }
 
-
-ComList.propTypes = {
+ComList.defaultProps = {
+  disabled: false
 };
 
-ComList.defaultProps = {
+ComList.propTypes = {
   cascadeParams: PropTypes.object,
   disabled: PropTypes.bool,
   value: PropTypes.any,

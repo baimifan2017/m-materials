@@ -2,9 +2,8 @@
  * @description 本地数据
  */
 
-
-import SimpleGrid from '@m-materials/simple-grid';
 import React from 'react';
+import SimpleGrid from '@m-materials/simple-grid';
 
 class LocalSimpleGrid extends React.Component {
   render() {
@@ -18,9 +17,9 @@ class LocalSimpleGrid extends React.Component {
         { name: '张三', code: '代码1' },
         { name: '李四', code: '代码2' },
       ],
-      position:['bottomCenter']
+      position: ['bottomCenter']
     }
-    return <SimpleGrid {...props}/>;
+    return <SimpleGrid {...props} />;
   }
 }
 
