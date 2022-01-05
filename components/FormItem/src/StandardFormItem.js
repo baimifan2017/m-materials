@@ -1,6 +1,7 @@
 
 import ComGrid from '@m-materials/com-grid';
 import ComTree from '@m-materials/com-tree';
+import ComList from '@m-materials/com-list';
 import {
   Button, Checkbox, Col, DatePicker, Form, Input, InputNumber,
   message, Radio, Select, Switch, TimePicker
@@ -233,7 +234,7 @@ class StandardFormItem extends PureComponent {
           <Button {...rest} style={rest.style || { width: '100%' }}>
             {rest.text}
           </Button>
-        );
+        ); 
       case 'text':
         return <span style={rest.style}>{rest.text}</span>;
       case 'switch':

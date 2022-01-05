@@ -18,7 +18,7 @@ class NoPageBar extends Component {
         { title: '李四', code: 'ls' },
       ],
       reader: {
-        name: 'title',
+        name: 'title', 
         description: 'code',
       },
       defaultValue: '张三',

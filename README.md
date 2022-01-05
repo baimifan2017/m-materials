@@ -58,6 +58,21 @@ $ iceworks sync
 Add the materials data url to [AppWorks](https://appworks.site/pack/basic/materials.html#%E8%87%AA%E5%AE%9A%E4%B9%89%E7%89%A9%E6%96%99%E6%BA%90).
 
 
+## build.json 配置
+```json
+{
+  "disableGenerateStyle": true,
+  "plugins": [
+    "build-plugin-component",
+    ["build-plugin-antd", {
+      "themeConfig": {
+        "primary-color": "#40a9ff" // 配置主题颜色
+      }
+    }]
+  ]
+}
+
+```
 
 ## React 富文本编辑器
 

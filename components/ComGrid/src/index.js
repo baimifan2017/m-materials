@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import SimpleGrid from '@m-materials/simple-grid';
+// import '../../SimpleGrid/build/index.css';
 // 必须手动引入
 import '@m-materials/simple-grid/build/index.css';
 import { Select } from 'antd';
 import cls from 'classnames';
-import { isNumber, isString,get } from 'lodash';
+import { isNumber, isString, get } from 'lodash';
 import PropTypes from 'prop-types';
-export default function ComGrid(props) {
+export default function ComGrid(props) {  
   const { value, dataSource = [],
     columns, pagination, placeholder, allowClear, disabled, showSearch,
     store, searchProperties, ...others } = props;
 
-  const [showGrid, setShowGrid] = useState(false);
-  const [mValue, setValue] = useState();
-
-
+  const [showGrid, setShowGrid] = useState(false);  
+  const [mValue, setValue] = useState(); 
+  
+  
   let quickSearchValue = null; // 快速过滤value
   let gridRef = null;
 
@@ -22,7 +23,7 @@ export default function ComGrid(props) {
    * 获取下拉选中值
    */
   const getReader = (readerField, obj) => {
-    return get(obj,`${readerField}`);
+    return get(obj, `${readerField}`);
   };
 
   const afterSelect = (item, index) => {
