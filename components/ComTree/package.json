@@ -1,6 +1,6 @@
 {
   "name": "@m-materials/com-tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "基于antd TreeSelect 下拉树结构选择器",
   "files": [
     "demo/",
@@ -32,6 +32,7 @@
     "component"
   ],
   "dependencies": {
+    "@m-materials/form-item": "^1.0.0",
     "antd": "^4.17.3",
     "prop-types": "^15.5.8",
     "react-custom-scrollbars": "^4.2.1"

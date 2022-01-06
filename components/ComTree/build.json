@@ -2,13 +2,6 @@
   "disableGenerateStyle": true,
   "plugins": [
     "build-plugin-component",
-    [
-        "build-plugin-antd",
-        {
-          "themeConfig": {
-            //  "primary-color": "#f53c32"
-          }
-        }
-      ]
+    ["build-plugin-antd"]
   ]
 }

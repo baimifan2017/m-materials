@@ -1,4 +1,4 @@
-
+import produce from 'immer';
 import ComGrid from '@m-materials/com-grid';
 import ComTree from '@m-materials/com-tree';
 import ComList from '@m-materials/com-list';
@@ -109,8 +109,17 @@ class StandardFormItem extends PureComponent {
     wrapperCol: { span: 16 },
   };
 
-  getItem = (item, type) => {
-    let rest = _.omit(item, ['newKey']);
+  /**
+   * 
+   * @param {object} item 
+   * @param {string} type 
+   * @param {string} decoratorCode 
+   * @returns 
+   */
+  getItem = (item, type, decoratorCode) => {
+    let rest = produce(item, (draft) => {
+      _.omit(draft, ['newKey'])
+    })
     // 如果是平台组件
     if (packageComponents.includes(type)) {
       // 对接平台组件参数转换
@@ -234,17 +243,29 @@ class StandardFormItem extends PureComponent {
           <Button {...rest} style={rest.style || { width: '100%' }}>
             {rest.text}
           </Button>
-        ); 
+        );
       case 'text':
         return <span style={rest.style}>{rest.text}</span>;
       case 'switch':
         return <Switch size={rest.size || 'small'} {...rest} />;
       case 'comList':
-        return <ComList {...rest} style={rest.style || { width: '100%' }} />;
+        return <ComList
+          name={decoratorCode}
+          rowKey={rest.rowKey || 'name'}
+          form={rest.form}
+          style={rest.style || { width: '100%' }}
+          {...rest}
+        />;
       case 'comTree':
-        return <ComTree {...rest}
-          defaultValue={rest.initialValue}
-          style={rest.style || { width: '100%' }} />;
+        console.log(decoratorCode)
+        return <ComTree
+          name={decoratorCode}
+          rowKey={rest.rowKey}
+          form={rest.form}
+          name={decoratorCode}
+          style={rest.style || { width: '100%' }}
+          {...rest}
+        />;
       case 'comGrid':
         return (
           <ComGrid
@@ -265,8 +286,8 @@ class StandardFormItem extends PureComponent {
             }
             searchProperties={rest.searchProperties}
             rowKey={rest.rowKey}
-            defaultValue={rest.initialValue}
             form={rest.form}
+            name={decoratorCode}
             {...rest}
           />
         );
@@ -304,6 +325,7 @@ class StandardFormItem extends PureComponent {
       validator,
       ...tempItem
     } = this.props;
+
     let { initialValue, formLayout, maxLength, ...item } = tempItem;
     let { reader } = item;
     let decoratorCode = code;
@@ -313,7 +335,7 @@ class StandardFormItem extends PureComponent {
         message.error(`${label}【${code}】没有配置reader，请检查！`);
         return null;
       }
-      decoratorCode = reader.parseName || reader.name;
+      // decoratorCode = reader.parseName || reader.name;
     }
     this.itemSpan = span || this.itemSpan;
     // 设置item的布局
@@ -341,11 +363,15 @@ class StandardFormItem extends PureComponent {
         initialValue = initialValue.format(format);
       }
     }
+
+    // 设置默认值
     if (type === 'checkbox' || type === 'switch') {
       this.ItemConfig.initialValue = !!initialValue;
     } else {
       this.ItemConfig.initialValue = initialValue;
     }
+
+
     if (type === 'inputNumber') {
       this.validator = validator ? this.validatorWrap : this.validatorFunc;
       this.ItemRule.push({ validator: this.validator });
@@ -365,13 +391,14 @@ class StandardFormItem extends PureComponent {
       item.style = currencyCodeStyleLeft;
     }
     let needFormWrapper = true;
-    let formContent = this.getItem(item, type);
+    let formContent = this.getItem(item, type, decoratorCode);
+
     if (type === 'button' || type === 'text' || noFormControl) {
       needFormWrapper = false;
     }
     // 判断是否加入form控制
     if (needFormWrapper) {
-      formContent = (<FormItem name={decoratorCode} label={label}
+      formContent = (<FormItem name={decoratorCode} label={label} key={decoratorCode}
         {...this.formLayoutTemp}
         {...this.ItemConfig}>{formContent}</FormItem>);
     } else {

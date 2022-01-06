@@ -130,7 +130,7 @@ export default function ComList(props) {
   };
 
   const getData = () => {
-    const { cascadeParams, store, remotePaging, searchProperties } = props;
+    const { cascadeParams, remotePaging, searchProperties } = props;
     const superParams = { ...(params || {}) };
     if (remotePaging && !isBoolean(pagination) && isPlainObject(pagination)) {
       Object.assign(superParams, {

@@ -7,12 +7,12 @@
 
 ## API
 
-| 参数              | 说明                                                 | 类型                             | 默认值            | 版本 |     |
+| 参数              | 说明                                                 | 类型                             | 默认值              | 是否必填 |     |
 | ----------------- | ---------------------------------------------------- | -------------------------------- | ----------------- | ---- | --- |
-| allowClear        | 可以点击清除图标删除内容                               | boolean                          | false             |      |     |
-| afterSelect       | 选择数据行后触发该事件                                 | Function(item: T, index: number) | -                 |      |     |
+| allowClear        | 可以点击清除图标删除内容                               | boolean                          | false               |     |  |
+| afterSelect       | 选择数据行后触发该事件                                 | Function(item: T, index: number) | -                   |      |     |
 | afterClear        | 清空数据触发该事件                                     | Function                         | -                 |      |     |
-| afterLoaded       | 数据请求完成调用该事件，返回接口请求的数据               | Function(data: object\[])        | -                 |      |     |
+| afterLoaded       | 数据请求完成调用该事件，返回接口请求的数据               | Function(data: object\[])          | -                 |      |     |
 | cascadeParams     | 级联参数配置                                          | object                           | -                 |      |     |
 | className         | 选择框样式名                                          | string                           | -                 |      |     |
 | defaultValue      | 输入框默认内容                                        | string                           | -                 |      |     |
@@ -28,26 +28,30 @@
 | showSearch        | 显示快速搜索                                          | boolean                          | true              |      |     |
 | searchPlaceHolder | 搜索框默认文字                                         | string                           | -                 |      |     |
 | searchProperties  | 搜索接口数据属性配置                                   | string\[]                        | \['code', 'name'] |      |     |
-| store             | 数据接口对象,参考[配置项](#StoreProps)                 | object                           | -                 |      |     |
+| store             | 数据接口对象,参考[配置项](#StoreProps)                  | object                           | -                 |      |     |
 | value             | 输入框内容                                            | string                           | -                 |      |     |
-| width             | 数据面板宽度,默认与选择框同宽                           | number                           | -                 |      |     |
+| width             | 数据面板宽度,默认与选择框同宽                            | number                           | -                 |      |     |
 
 ### StoreProps
-dataSource用来配置本地数据，store用来配置远程数据请求信息。
+
+- dataSource 用来配置本地数据，store用来配置远程数据请求信息。
+- dataPath 用于后端渲染下拉树的数据节点,默认读取response（后端响应数据中的'data'属性）。你也可配置成'data.content', 表示读取返回数据中data中的content作为下拉树渲染内容。
+
 
 | 参数     | 说明                 | 类型            | 默认值 | 版本 |
 | -------- | -------------------- | --------------- | ------ | ---- |
 | params   | 接口请求参数         | object          | -      |      |
 | type     | 接口请求类型         | 'GET' \| 'POST' | GET    |      |
 | url      | 接口请求地址         | string          | -      |      |
-| autoLoad | 初始化时自动获取数据 | boolean         | false  |      |
+| autoLoad | 初始化时自动获取数据 | boolean           | false  |      | 
+| dataPath | 用于渲染数据路径    | string            | 'data'  |      | 
+
+
 
 ### Reader
 
 | 参数        | 说明                                         | 类型      | 默认值     | 版本 |
 | ----------- | -------------------------------------------- | --------- | ---------- | ---- |
-| childKey    | 子节点的属性名                               | string    | 'children' |      |
-| data        | 截取的数据节点                               | string    | -          |      |
-| description | 次要信息属性名                               | string    | -          |      |
-| field       | ComboList 属性 field 映射,属性名必须一一对应 | string\[] | -          |      |
-| name        | 显示的属性名,ComboList 属性 name 映射        | string    | -          |      |
+| childKey    | 子节点的属性名                                | string    | 'children'|      |
+| field       | 与dataSource树状节点属性对应，form表单提交时候将获取额外属性    | string\[] | -          |      |
+| name        | 对应节点key                                 | string     | -          |      |

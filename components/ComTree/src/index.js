@@ -47,6 +47,9 @@ export default class ComTree extends React.Component {
     if (store && store.autoLoad === true) {
       this.getData();
     }
+
+    console.log(this.props)
+
   }
 
   componentWillUnmount() {
@@ -120,7 +123,7 @@ export default class ComTree extends React.Component {
     let superParams = { ...(params || {}) };
     if (cascadeParams) {
       this.loaded = false;
-      superParams = {...superParams,cascadeParams}
+      superParams = { ...superParams, cascadeParams }
     }
     if (!this.loaded) {
       this.loadData(superParams);
@@ -129,7 +132,7 @@ export default class ComTree extends React.Component {
 
   loadData = (params) => {
     const { store, afterLoaded, reader } = this.props;
-    const { url, type } = store || {};
+    const { url, type,dataPath = 'data' } = store || {};
     const methodType = type || 'GET';
     this.setState({ loading: true });
     const requestOptions = {
@@ -146,7 +149,7 @@ export default class ComTree extends React.Component {
       axios(requestOptions)
         .then((res) => {
           if (res.success) {
-            const resultData = res.data || [];
+            const resultData = res[dataPath] || [];
             let ds = [];
             if (reader && reader.data) {
               ds = this.getReaderData(resultData);
@@ -356,7 +359,7 @@ export default class ComTree extends React.Component {
           value: this.getReader(reader.name, item),
         },
         () => {
-          const data = { [name]: this.getReader(reader.name, item) };
+          const data = name ? { [name]: this.getReader(reader.name, item) } : { [reader.name]: this.getReader(reader.name, item) };
           const formData = form ? form.getFieldsValue() : {};
           if (reader && reader.field && field.length > 0 && field.length === reader.field.length) {
             field.forEach((f, idx) => {
@@ -365,6 +368,7 @@ export default class ComTree extends React.Component {
           }
           Object.assign(formData, data);
           if (form) {
+            debugger
             form.setFieldsValue(formData);
           }
           if (afterSelect) {

@@ -22,12 +22,12 @@ const DatePickerNewItem = props => {
 const RadioGroupItem = props => {
   return <StandardFormItem {...props} type="radio" />;
 };
-
+ 
 const SelectItem = props => {
   return <StandardFormItem {...props} type="select" />;
 };
 
-const InputNumberItem = props => {
+const InputNumberItem = props => { 
   const extProps = { ...(props || {}) };
   if (extProps.onBlur) {
     Object.assign(extProps, {
@@ -88,8 +88,8 @@ const SwitchItem = props => {
   return <StandardFormItem {...extProps} type="switch" />;
 };
 
-const ComboListItem = props => {
-  return <StandardFormItem {...props} type="comboList" />;
+const ComListItem = props => {
+  return <StandardFormItem {...props} type="comList" />;
 };
 
 const ComGridItem = props => {
@@ -126,6 +126,7 @@ export default {
   DatePickerNewItem,
   ComGridItem,
   ComTreeItem,
+  ComListItem,
   SelectItem,
   RadioGroupItem,
   FormRowWrapper
@@ -163,11 +164,11 @@ const propTypes = {
   afterSelect: PropTypes.func,
   tooltip: PropTypes.string,
 };
-// MonthPickerItem.prototype = propTypes;
-// DatePickerNewItem.prototype = propTypes;
-// ComGridItem.prototype = propTypes;
-// ComTreeItem.prototype = propTypes;
-// ComListItem.prototype = propTypes; todo
+MonthPickerItem.prototype = propTypes;
+DatePickerNewItem.prototype = propTypes;
+ComGridItem.prototype = propTypes;
+ComTreeItem.prototype = propTypes;
+ComListItem.prototype = propTypes; 
 InputItem.propTypes = propTypes;
 CheckboxItem.propTypes = propTypes;
 UploadFileItem.propTypes = propTypes;

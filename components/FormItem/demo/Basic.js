@@ -10,7 +10,7 @@ const {
   MonthPickerItem, RangePickerItem,
   InputAreaItem, InputItem, InputNumberItem,
   RadioGroupItem, SelectItem, SwitchItem,
-  ComGridItem, ComTreeItem
+  ComGridItem, ComTreeItem, ComListItem
 } = FormItem
 
 class Demo extends Component {
@@ -45,7 +45,7 @@ class Demo extends Component {
       rowKey: 'code',
       reader: {
         name: 'name',
-        field:['name','code']
+        field: ['name', 'code']
       }
     }
 
@@ -89,6 +89,20 @@ class Demo extends Component {
       }
     }
 
+    const comListProps = {
+      dataSource: [
+        { title: 'list1', code: 'zs' },
+        { title: 'list2', code: 'ls' },
+      ],
+      reader: {
+        name: 'title',
+        description: 'code',
+      },
+
+      rowKey: 'code',
+      pagination: false
+    }
+
     return (
       <React.Fragment>
         <FormRowWrapper ref={this.formRef} isDetail={false} span={8} name="control-ref">
@@ -101,12 +115,14 @@ class Demo extends Component {
             code='DatePickerItem'
             disabled
           />
+
           <MonthPickerItem
             label='MonthPickerItem'
             code='MonthPickerItem'
             required // 必填， 也可以通过required:[{}]方式传入自定义必填信息。
           />
           <RangePickerItem label='RangePickerItem' code='RangePickerItem' />
+
           <InputItem
             label='InputItem'
             code='InputItem'
@@ -115,13 +131,15 @@ class Demo extends Component {
           />
           <InputNumberItem label='InputNumberItem' code='InputNumberItem' initialValue='1' />
           <SwitchItem label='SwitchItem' code='SwitchItem' />
+
           <SelectItem label='SelectItem' code='SelectItem'
             options={[
               { value: 'option1', text: 'option1' },
               { value: 'option2', text: 'option2' },
             ]}
           />
-          <RadioGroupItem label='RadioGroupItem'
+          <RadioGroupItem
+            label='RadioGroupItem'
             code='RadioGroupItem'
             options={[
               { value: 'radio1', text: 'radio1' },
@@ -132,9 +150,21 @@ class Demo extends Component {
           <ComGridItem
             label='ComGridItem'
             code='ComGridItem'
-            initialValue='zs'
+            initialValue='ComGridItem'
             {...combGridProps} />
-          <ComTreeItem label='ComTreeItem' code='ComTreeItem' {...comTreeProps} />
+
+          <ComTreeItem
+            label='ComTreeItem'
+            code='ComTreeItem'
+            initialValue={'ComTreeItem111'}
+            {...comTreeProps} />
+
+          <ComListItem
+            label='ComListItem'
+            code='ComListItem'
+            initialValue={'ComListItem'}
+            {...comListProps} />
+
           <InputAreaItem
             label='InputAreaItem'
             code='InputAreaItem'
@@ -145,7 +175,6 @@ class Demo extends Component {
               wrapperCol: { span: 20 }, // Element 宽度，labelCol、wrapperCol 两者之和应该等于24.
             }}
           />
-
         </FormRowWrapper>
         <Button onClick={this.onSubmit} style={{ float: 'right' }}>提交</Button>
 

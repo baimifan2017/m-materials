@@ -1,10 +1,6 @@
 {
   "plugins": [
     "build-plugin-component",
-    ["build-plugin-antd", {
-        "themeConfig": {
-          // "primary-color": ""
-        }
-      }]
+    ["build-plugin-antd"]
   ]
 }

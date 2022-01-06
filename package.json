@@ -30,5 +30,8 @@
       "name": "m-materials",
       "url": "https://fusion.design/api/v1/sites/18322/materials"
     }
+  },
+  "dependencies": {
+    "lerna": "^4.0.0"
   }
 }
